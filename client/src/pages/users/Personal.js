@@ -3,15 +3,35 @@ import { Form, Input, Select, DatePicker, Button } from 'antd';
  import { Row, Col } from 'antd';
 
 const { Option } = Select;
- function Personal () {
-    const onFinish = (values) => {
-        console.log('Form values:', values);
-      };
+ function Personal ({onFinish}) {
+    // const onFinish = (values) => {
+    //     console.log('Form values:', values);
+    //   };
   return (
     
     <div style={{    margin: '70px'}}>
-     
-    <Form   labelCol={{ span: 8 }} wrapperCol={{ span: 16 }}     onFinish={onFinish} layout="vertical">
+     <Row>
+          <Col span={8}>
+    <Form.Item label="Username Name" name="username" 
+    rules={[{ required: true, message: 'Please enter your Username' }]}>
+      <Input placeholder="Username" />
+    </Form.Item>
+    </Col>
+    <Col span={8}>
+    <Form.Item label="email" name="email" 
+    rules={[{ required: true, message: 'Please enter your email' }]}>
+      <Input placeholder="Email" />
+    </Form.Item>
+</Col>
+    <Col span={8}>
+    <Form.Item label="password" name="password" 
+    rules={[{ required: true, message: 'Please enter your password' }]}>
+      <Input placeholder=" Password" />
+    </Form.Item>
+    </Col>
+    </Row>
+
+   
     <Row>
           <Col span={8}>
     <Form.Item label="First Name" name="firstName" 
@@ -26,7 +46,7 @@ const { Option } = Select;
     </Form.Item>
 </Col>
     <Col span={8}>
-    <Form.Item label="Father Name" name="lastName" 
+    <Form.Item label="Father Name" name="fatherName" 
     rules={[{ required: true, message: 'Please enter your Father name' }]}>
       <Input placeholder=" Father Name" />
     </Form.Item>
@@ -87,7 +107,7 @@ const { Option } = Select;
       </Select>
     </Form.Item>
     </Col>
-
+{/* 
     <Col span={8}>
     <Form.Item label="Your work" name="yourwork" rules={[{ required: true, message: 'Please select your work' }]}>
       <Select placeholder="Select Caste">
@@ -156,12 +176,12 @@ const { Option } = Select;
     <Form.Item label="City" name="district" rules={[{ required: true, message: 'Please enter your City Name' }]}>
       <Input placeholder="City" />
     </Form.Item>
-    </Col>
+    </Col> */}
     </Row>
-    <Form.Item>
+    {/* <Form.Item>
       <Button type="primary" htmlType="submit">Submit</Button>
-    </Form.Item>
-  </Form>
+    </Form.Item> */}
+  
   </div>
   )
 }
