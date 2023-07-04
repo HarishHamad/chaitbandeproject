@@ -3,7 +3,9 @@ import {
 } from "@refinedev/antd";
 import React, { useState } from 'react';
 import { Button, Form, Space, Table } from "antd";
-import CreateChild from "./CreateChild";
+import CreateChild from "./CreateChild"; 
+import BusinessProfile from "./Business";
+import Education from "./Education";
 
 
 const UserList = () => {
@@ -11,10 +13,15 @@ const UserList = () => {
     const { tableProps, sorter } = useTable({initialSorter: [ { field: "id",order: "desc"}]});
     console.log("user tableProps", tableProps);
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isBusinessModalOpen, setIsBusinessModalOpen] = useState(false)
+    const [isEducationModalOpen, setIsEducationModalOpen] = useState(false)
+    
     const [parentId, setParentId] = useState(null)
     return (
         <div>
             {isModalOpen?<CreateChild parentId={parentId} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />:""}
+            {isBusinessModalOpen?<BusinessProfile parentId={parentId} isBusinessModalOpen={isBusinessModalOpen} setIsBusinessModalOpen={setIsBusinessModalOpen}/>:""}
+            {isEducationModalOpen?<Education parentId={parentId} isEducationModalOpen={isEducationModalOpen} setIsEducationModalOpen={setIsEducationModalOpen} />:""}
         <List>
                 <Form layout="inline" />
                 <br />
@@ -39,25 +46,30 @@ const UserList = () => {
                     render={(_, record) => (
                         <Space>
                             <EditButton
-                                hideText
+                               
                                 size="small"
                                 recordItemId={record.id}
                             />
                             <ShowButton
-                                hideText
+                               
                                 size="small"
                                 recordItemId={record.id}
                             />
                             <DeleteButton
                                 size="small"
-                                hideText
+                               
                                 recordItemId={record.id}
                             />
                             <Button onClick = {()=>{
                                 console.log("On Click this parentId", record.id)
                                 setParentId(record.id)
-                                setIsModalOpen(true)
-                                }}>CreateChild</Button>
+                                setIsEducationModalOpen(true)
+                                }}>Education</Button>
+                              <Button onClick = {()=>{
+                                console.log("On Click this parentId", record.id)
+                                setParentId(record.id)
+                                setIsBusinessModalOpen(true)
+                                }}>Business</Button>
                         </Space>
                     )}
                 />

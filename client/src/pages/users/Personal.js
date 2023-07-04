@@ -1,52 +1,16 @@
-import React from 'react';
-import { Create, useForm } from '@refinedev/antd';
+import React from 'react'
+import { Form, Input, Select, DatePicker, Button } from 'antd';
+ import { Row, Col } from 'antd';
 
-import { Col, Row, Form, Input, Select, Upload, Button, Space,DatePicker } from 'antd';
-import { MinusCircleOutlined, PlusOutlined, UploadOutlined } from '@ant-design/icons';
-import { getValueProps, mediaUploadMapper } from "@refinedev/strapi-v4";
-import Personal from './Personal';
-import Business from './Business';
-
-import { Tabs } from 'antd';
-import Education from './Education';
-const onChange = (key) => {
-  console.log(key);
-};
-const items = [
-  {
-    key: '1',
-    label: `Personal Profile`,
-    children: <Personal/>,
-  },
-  {
-    key: '2',
-    label: `Business Profile`,
-    children: <Business/>,
-  },
-  {
-    key: '3',
-    label: `Education Profile`,
-    children: <Education/>,
-  },
-];
-
-const UserCreate = () => {
-    const { formProps, getInputProps, saveButtonProps } = useForm();
-    const handleFormFinish = (values) => {
-        values={...values, role:2}
-        console.log("values", values)
-        // values={...values, classes:selectedClassId,subject:selectedSubjectId,topics:selectedTopicId}
-        
-        formProps.onFinish?.(mediaUploadMapper(values));
-        // Handle form submission with mappedValues
-
-    };
-    return (
-        <div>
-         <Create saveButtonProps={saveButtonProps}>
-
-            <Form {...formProps} layout="vertical" onFinish={handleFormFinish}>
-            <Row>
+const { Option } = Select;
+ function Personal ({onFinish}) {
+    // const onFinish = (values) => {
+    //     console.log('Form values:', values);
+    //   };
+  return (
+    
+    <div style={{    margin: '70px'}}>
+     <Row>
           <Col span={8}>
     <Form.Item label="Username Name" name="username" 
     rules={[{ required: true, message: 'Please enter your Username' }]}>
@@ -143,12 +107,84 @@ const UserCreate = () => {
       </Select>
     </Form.Item>
     </Col>
+{/* 
+    <Col span={8}>
+    <Form.Item label="Your work" name="yourwork" rules={[{ required: true, message: 'Please select your work' }]}>
+      <Select placeholder="Select Caste">
+        <Option value="">student</Option>
+        <Option value="">private job</Option>
+        <Option value="">business</Option>
+      </Select>
+    </Form.Item>
+    </Col>
+  
     </Row>
-                
-            </Form>
-            </Create>
-        </div>
-    );
-};
+    
+    <Row>
+          <Col span={8}>
+    <Form.Item label="Email" name="email" rules={[{ required: true, message: 'Please enter your valid Email Address' }]}>
+      <Input placeholder="@example.com" />
+    </Form.Item>
+    </Col>
 
-export default UserCreate;
+
+    <Col span={8}>
+    <Form.Item label="Contact" name="lastName" rules={[{ required: true, message: 'Please enter your Contact Number' }]}>
+      <Input placeholder="Contact Number" type='Number' />
+    </Form.Item>
+    </Col>
+
+
+
+
+    <Col span={8}>
+<Form.Item label="State" name="state" rules={[{ required: true, message: 'Please select your State' }]}>
+      <Select placeholder="Select State">
+        <Option value="">Madhya pradesh</Option>
+        <Option value="">Karnatak</Option>
+        <Option value="">Punjab</Option>
+        <Option value="">Haryana</Option>
+        <Option value="">Jammu Kashmir</Option>
+        <Option value="">kerala</Option>
+        <Option value="">Bihar</Option>
+        <Option value="">Uttar Pradesh</Option>
+        <Option value="">Telangana</Option>
+        
+      </Select>
+    </Form.Item>
+    </Col>
+    </Row>
+
+    <Row>
+  
+
+    <Col span={8}>
+    <Form.Item label="Pincode" name="pincode" rules={[{ required: true, message: 'Please enter your Pincode Number' }]}>
+      <Input placeholder="Pincode" />
+    </Form.Item>
+    </Col>
+    
+    <Col span={8}>
+    <Form.Item label="District" name="district" rules={[{ required: true, message: 'Please enter your district Name' }]}>
+      <Input placeholder="District" />
+    </Form.Item>
+    </Col>
+
+
+
+    <Col span={8}>
+    <Form.Item label="City" name="district" rules={[{ required: true, message: 'Please enter your City Name' }]}>
+      <Input placeholder="City" />
+    </Form.Item>
+    </Col> */}
+    </Row>
+    {/* <Form.Item>
+      <Button type="primary" htmlType="submit">Submit</Button>
+    </Form.Item> */}
+  
+  </div>
+  )
+}
+
+
+export default  Personal;

@@ -1,8 +1,31 @@
 import React from 'react';
 import { Create, useForm } from '@refinedev/antd';
 import { Col, Row, Form, Input, Select, Upload, Button, Space ,Modal} from 'antd';
+import Personal from './Personal';
+import Business from './Business';
 
-
+import { Tabs } from 'antd';
+import Education from './Education';
+const onChange = (key) => {
+  console.log(key);
+};
+const items = [
+  {
+    key: '1',
+    label: `Personal Profile`,
+    children: <Personal/>,
+  },
+  {
+    key: '2',
+    label: `Business Profile`,
+    children: <Business/>,
+  },
+  {
+    key: '3',
+    label: `Education Profile`,
+    children: <Education/>,
+  },
+];
 
 const CreateChild = ({parentId, isModalOpen, setIsModalOpen}) => {
     console.log("parentId",parentId)
@@ -26,12 +49,14 @@ const CreateChild = ({parentId, isModalOpen, setIsModalOpen}) => {
         // Handle form submission with mappedValues
 
     };
+
     return (
         <div>
-            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel}>
+            <Modal title="Basic Modal" open={isModalOpen} onOk={handleOk} onCancel={handleCancel} width={1220}>
            
             <Form {...formProps} layout="vertical" onFinish={handleFormFinish}>
-                <Form.Item
+            <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+                {/* <Form.Item
                     label="UserName"
                     name="username"
                     rules={[
@@ -66,7 +91,7 @@ const CreateChild = ({parentId, isModalOpen, setIsModalOpen}) => {
                     ]}
                 >
                     <Input />
-                </Form.Item>
+                </Form.Item> */}
             </Form>
            
             </Modal>
