@@ -34,6 +34,16 @@ const UserList = () => {
                         sorter={{ multiple: 3 }}
                     />
                     <Table.Column
+            dataIndex="id"
+            key="id"
+            title="ID"
+            defaultSortOrder={getDefaultSortOrder("id", sorter)}
+            sorter={{ multiple: 3 }}
+            render={(_, record) => (
+              <ImageField value={"https://www.kasandbox.org/programming-images/avatars/spunky-sam.png"} width={50} height={50} />
+            )}
+          />
+                    <Table.Column
                         dataIndex="username"
                         key="name"
                         title="Name"
@@ -60,7 +70,7 @@ const UserList = () => {
                                
                                 recordItemId={record.id}
                             />
-                            <Button onClick = {()=>{
+                            {/* <Button onClick = {()=>{
                                 console.log("On Click this parentId", record.id)
                                 setParentId(record.id)
                                 setIsEducationModalOpen(true)
@@ -69,7 +79,7 @@ const UserList = () => {
                                 console.log("On Click this parentId", record.id)
                                 setParentId(record.id)
                                 setIsBusinessModalOpen(true)
-                                }}>Business</Button>
+                                }}>Business</Button> */}
                         </Space>
                     )}
                 />
