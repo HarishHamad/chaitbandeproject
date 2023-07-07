@@ -13,7 +13,7 @@ const EducationForm = ({ userid ,educationlist}) => {
     class: "",
     branch: "",
     college: "",
-    percent: "",
+    percentage: "",
   });
 
   const columns = [
@@ -53,6 +53,7 @@ const EducationForm = ({ userid ,educationlist}) => {
         />
       ),
     },
+    
     {
       title: "College/Institute",
       dataIndex: "college",
@@ -91,13 +92,13 @@ const EducationForm = ({ userid ,educationlist}) => {
     },
     {
       title: "Percent",
-      dataIndex: "percent",
-      key: "percent",
+      dataIndex: "percentage",
+      key: "percentage",
       editable: true,
       render: (_, record) => (
         <Input
-          value={record.percent}
-          onChange={(e) => handleInputChange(e, record.key, "percent")}
+          value={record.percentage}
+          onChange={(e) => handleInputChange(e, record.key, "percentage")}
         />
       ),
     },
@@ -159,14 +160,9 @@ const EducationForm = ({ userid ,educationlist}) => {
     setNewEducation({ name: "", class: "", branch: "", college: "", percent: "" });
   };
   console.log("SetData", data)
-
   const handleRemove = (key) => {
     const updatedData = data.filter((item) => item.key !== key);
     setData(updatedData);
-  };
-
-  const handleEdit = (key) => {
-    setEditingKey(key);
   };
 
   const handleSave = (key) => {
@@ -200,6 +196,22 @@ const EducationForm = ({ userid ,educationlist}) => {
       }),
     };
   });
+
+  const edit = (key) => {
+    setEditingKey(key);
+  };
+
+  const remove = (key) => {
+    handleRemove(key);
+  };
+
+  const save = (key) => {
+    handleSave(key);
+  };
+
+  const cancel = () => {
+    handleCancel();
+  };
 
   return (
     <div>

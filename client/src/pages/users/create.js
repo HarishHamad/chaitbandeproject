@@ -4,7 +4,7 @@ import { getValueProps, mediaUploadMapper } from "@refinedev/strapi-v4";
 import { Col, DatePicker, Form, Input, Row, Select, Upload } from "antd";
 import Business from "./Business";
 import Personal from "./Personal";
-import ImgCrop from "antd-img-crop";
+
 import { useState } from "react";
 
 import Education from "./Education";
@@ -75,34 +75,29 @@ const UserCreate = () => {
         <Form {...formProps} layout="vertical" onFinish={handleFormFinish}>
           <Row gutter={24}>
             <Col span={24}>
-              {/* <Form.Item
-                name="photo"
-                valuePropName="photo"
-                getValueProps={(data) => getValueProps(data, API_URL)}
-                style={{ marginLeft: "400px" }}
+            <Form.Item
+              name="photo"
+              valuePropName="photo"
+              getValueProps={(data) => getValueProps(data, API_URL)}
+              style={{ marginLeft: "400px" }}
+            >
+              <Upload
+                name="files"
+                action={`${API_URL}/api/upload`}
+                headers={{
+                  "Access-Control_Allow-Origin": "*",
+                  Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`,
+                }}
+                accept="image/*"
+                listType="picture-card"
+                fileList={fileList}
+                onChange={onChange}
+                onPreview={onPreview}
               >
-                <ImgCrop rotationSlider>
-                  <Upload
-                    name="files"
-                    action={`${API_URL}/api/upload`}
-                    headers={{
-                      "Access-Control_Allow-Origin":"*",
-                      Authorization: `Bearer ${localStorage.getItem(
-                        TOKEN_KEY,
-                       
-                      )}`,
-                    }}
-                    accept="image/*"
-                    listType="picture-card"
-                    fileList={fileList}
-                    onChange={onChange}
-                    onPreview={onPreview}
-                  >
-                    {fileList.length < 5 && "+ Upload"}
-                  </Upload>
-                </ImgCrop> 
-              </Form.Item> */}
-              <Form.Item
+                {fileList.length < 5 && "+ Upload"}
+              </Upload>
+            </Form.Item>
+              {/* <Form.Item
                 name="photo"
                 // valuePropName="photo"
                 label="Username Name"
@@ -120,7 +115,7 @@ const UserCreate = () => {
                 >
                   <p className="ant-upload-text">Photo</p>
                 </Upload.Dragger>
-              </Form.Item>
+              </Form.Item> */}
             </Col>
           </Row>
           <br />

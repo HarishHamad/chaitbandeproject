@@ -179,10 +179,6 @@ const AddressDetails = ({userid}) => {
     setData(updatedData);
   };
 
-  const handleEdit = (key) => {
-    setEditingKey(key);
-  };
-
   const handleSave = (key) => {
     setEditingKey("");
   };
@@ -215,13 +211,39 @@ const AddressDetails = ({userid}) => {
     };
   });
 
+  const edit = (key) => {
+    setEditingKey(key);
+  };
+
+  const remove = (key) => {
+    handleRemove(key);
+  };
+
+  const save = (key) => {
+    handleSave(key);
+  };
+
+  const cancel = () => {
+    handleCancel();
+  };
+
   return (
     <div>
       <div>
         <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16 }}>
           + Add Address
         </Button>
-        <Button type="default" onClick={()=>{
+        
+      </div>
+      <Table
+        components={components}
+        bordered
+        dataSource={data}
+        columns={columnsWithEditability}
+        rowClassName={() => "editable-row"}
+        pagination={false}
+      />
+      <Button type="primary" onClick={()=>{
       console.log("save data",data)
           data.map((item)=>{
             console.log("item",item)
@@ -244,15 +266,6 @@ const AddressDetails = ({userid}) => {
           })
 
     }}>Save Address</Button>
-      </div>
-      <Table
-        components={components}
-        bordered
-        dataSource={data}
-        columns={columnsWithEditability}
-        rowClassName={() => "editable-row"}
-        pagination={false}
-      />
     </div>
   );
 };
