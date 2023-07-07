@@ -243,7 +243,7 @@ const AddressDetails = ({userid}) => {
           });
           })
 
-    }}>Save Businesses</Button>
+    }}>Save Address</Button>
       </div>
       <Table
         components={components}

@@ -228,7 +228,7 @@ const EducationForm = ({userid}) => {
           });
           })
 
-    }}>Save Businesses</Button>
+    }}>Save Education</Button>
       </div>
       <Table
         components={components}
