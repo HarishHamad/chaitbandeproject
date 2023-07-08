@@ -11,7 +11,7 @@ const { Title, Text } = Typography;
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
 import Personal from './Personal';
-import PersonalDetails from './PersonalDetails';
+import PersonalDetails from './PersonalDetails';;
 const { Meta } = Card;
 
 const UserShow = () => {
@@ -79,7 +79,7 @@ const UserShow = () => {
 
       <Card
         style={{
-          width: 400,
+          width: 500,
           margin: "auto",
 
         }}
