@@ -2,15 +2,15 @@ import React, { useState } from "react";
 import { Table, Input, Select, Button } from "antd";
 import { useCreate, useShow } from "@refinedev/core";
 
-const FamilyDetails = ({ userid, familyList }) => {
+const FamilyDetails = ({ userid, familylist }) => {
   const { queryResult } = useShow({
-    resource: "families",
+    resource: "users",
     userid: userid,
     metaData: { populate: ["members", "addresses"] },
   });
   const { data: familyData, isLoading } = queryResult;
   const [data, setData] = useState(
-    familyList?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
+    familylist?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
   );
   const [editingKey, setEditingKey] = useState("");
   const { mutate } = useCreate();
@@ -18,8 +18,10 @@ const FamilyDetails = ({ userid, familyList }) => {
   const [newFamily, setNewFamily] = useState({
     name: "",
     relation: "",
-    age: "",
+    age: "",    
     occupation: "",
+    relationship:"",
+    
   });
 
   const columns = [
@@ -49,13 +51,13 @@ const FamilyDetails = ({ userid, familyList }) => {
     },
     {
       title: "Relation",
-      dataIndex: "relation",
-      key: "relation",
+      dataIndex: "relationship",
+      key: "relationship",
       editable: true,
       render: (_, record) => (
         <Input
-          value={record.relation}
-          onChange={(value) => handleInputChange(value, record.key, "relation")}
+          value={record.relationship}
+          onChange={(value) => handleInputChange(value, record.key, "relationship")}
         />
       ),
     },
@@ -209,9 +211,15 @@ const FamilyDetails = ({ userid, familyList }) => {
           data.forEach((item) => {
             if (!item.isOld) {
               const { key, ...remain } = item;
-              remain["age"] = parseInt(item.age);
+              remain["username"]="dds2dfsdf"
+              remain["password"]="ddsd2fsdf"
+              remain["email"]="ddsdfsd4f@a.com"
+              remain['role'] = {"name":"Public"}
+              //remain["age"] = parseInt(item.age);
+              remain['parentid'] = userid
+
               mutate({
-                resource: "families",
+                resource: "users",
                 values: remain,
               });
               item["isOld"] = true;

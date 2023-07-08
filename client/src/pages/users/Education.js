@@ -4,6 +4,7 @@ import { useCreate } from "@refinedev/core";
 
 const EducationForm = ({ userid ,educationlist}) => {
   const [data, setData] = useState(educationlist?.map((item) => ({ ...item, isOld: true })) ?? []);
+  console.log("Data ", data , " amd edicatopn list", educationlist)
   //const [data, setData] = useState([]);
   const [editingKey, setEditingKey] = useState("");
   const { mutate } = useCreate();
@@ -66,30 +67,30 @@ const EducationForm = ({ userid ,educationlist}) => {
         />
       ),
     },
-    {
-      title: "From",
-      dataIndex: "from",
-      key: "from",
-      editable: true,
-      render: (text, record) => (
-        <DatePicker
-          value={record.from}
-          onChange={(date) => handleDateChange(date, record.key, "from")}
-        />
-      ),
-    },
-    {
-      title: "Till",
-      dataIndex: "till",
-      key: "till",
-      editable: true,
-      render: (text, record) => (
-        <DatePicker
-          value={record.till}
-          onChange={(date) => handleDateChange(date, record.key, "till")}
-        />
-      ),
-    },
+    // {
+    //   title: "From",
+    //   dataIndex: "from",
+    //   key: "from",
+    //   editable: true,
+    //   render: (text, record) => (
+    //     <DatePicker
+    //       value={record.from}
+    //       onChange={(date) => handleDateChange(date, record.key, "from")}
+    //     />
+    //   ),
+    // },
+    // {
+    //   title: "Till",
+    //   dataIndex: "till",
+    //   key: "till",
+    //   editable: true,
+    //   render: (text, record) => (
+    //     <DatePicker
+    //       value={record.till}
+    //       onChange={(date) => handleDateChange(date, record.key, "till")}
+    //     />
+    //   ),
+    // },
     {
       title: "Percent",
       dataIndex: "percentage",
@@ -236,12 +237,17 @@ const EducationForm = ({ userid ,educationlist}) => {
           if (!item.isOld) {
             const { key, ...remain } = item;
             remain["percentage"] = parseFloat(item.percentage)
-            const fromdate = new Date(item.from);
-            const formattedFromDate = fromdate.toISOString();
-            remain["from"] = formattedFromDate
-            const tilldate = new Date(item.till);
-            const formattedTillDate = tilldate.toISOString();
-            remain["till"] = formattedTillDate
+            // if(item.form){
+            //   const fromdate = new Date(item.from);
+            //   const formattedFromDate = fromdate.toISOString();
+            //   remain["from"] = formattedFromDate
+            // }
+            // if(item.till){
+            //   const tilldate = new Date(item.till);
+            // const formattedTillDate = tilldate.toISOString();
+            // remain["till"] = formattedTillDate
+            // }
+            
             console.log("remain", remain)
             remain['userid'] = userid
             mutate({

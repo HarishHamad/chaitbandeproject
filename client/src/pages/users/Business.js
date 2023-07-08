@@ -2,21 +2,24 @@ import React, { useState } from "react";
 import { Table, Input, Select, Button, Form } from "antd";
 import { useCreate, useShow } from "@refinedev/core";
 
-const BusinessDetails = ({ userid, businessList }) => {
-  const { queryResult } = useShow({
-    resource: "businesses",
-    userid: userid,
-    metaData: { populate: ["members", "addresses"] },
-  });
-  const { data: businessData, isLoading } = queryResult;
+const BusinessDetails = ({ userid, businesslist }) => {
+  
+  console.log("business list component ", businesslist)
+  // const { queryResult } = useShow({
+  //   resource: "businesses",
+  //   userid: userid,
+  //   metaData: { populate: ["members", "addresses"] },
+  // });
+  // const { data: businessData, isLoading } = queryResult;
   const [data, setData] = useState(
-    businessList?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
+    businesslist?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
   );
+
   const [editingKey, setEditingKey] = useState("");
   const { mutate } = useCreate();
 
   const [newBusiness, setNewBusiness] = useState({
-    id: "",
+     
     ownername: "",
     businessname: "",
     category: "",
@@ -28,18 +31,18 @@ const BusinessDetails = ({ userid, businessList }) => {
   });
 
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.id}
-          onChange={(e) => handleInputChange(e, record.key, "id")}
-        />
-      ),
-    },
+    // {
+    //   title: "ID",
+    //   dataIndex: "id",
+    //   key: "id",
+    //   editable: true,
+    //   render: (_, record) => (
+    //     <Input
+    //       value={record.id}
+    //       onChange={(e) => handleInputChange(e, record.key, "id")}
+    //     />
+    //   ),
+    // },
     {
       title: "Owner Name",
       dataIndex: "ownername",
@@ -107,6 +110,7 @@ const BusinessDetails = ({ userid, businessList }) => {
       editable: true,
       render: (_, record) => (
         <Input
+        type="number"
           value={record.turnover}
           onChange={(e) => handleInputChange(e, record.key, "turnover")}
         />
@@ -119,6 +123,7 @@ const BusinessDetails = ({ userid, businessList }) => {
       editable: true,
       render: (_, record) => (
         <Input
+        type="number"
           value={record.size}
           onChange={(e) => handleInputChange(e, record.key, "size")}
         />
@@ -173,7 +178,7 @@ const BusinessDetails = ({ userid, businessList }) => {
   const handleAdd = () => {
     const newData = {
       key: `${data.length + 1}`,
-      id: newBusiness.id,
+       
       ownername: newBusiness.ownername,
       businessname: newBusiness.businessname,
       category: newBusiness.category,
@@ -185,7 +190,7 @@ const BusinessDetails = ({ userid, businessList }) => {
     };
     setData([...data, newData]);
     setNewBusiness({
-      id: "",
+       
       ownername: "",
       businessname: "",
       category: "",
@@ -271,7 +276,10 @@ const BusinessDetails = ({ userid, businessList }) => {
           data.forEach((item) => {
             if (!item.isOld) {
               const { key, ...remain } = item;
+              remain['userid'] = userid
               remain["turnover"] = parseFloat(item.turnover);
+              remain["size"] = parseInt(item.size);
+
               mutate({
                 resource: "businesses",
                 values: remain,
