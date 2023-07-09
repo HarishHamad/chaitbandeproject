@@ -16,39 +16,54 @@ const FamilyDetails = ({ userid, familylist }) => {
   const { mutate } = useCreate();
 
   const [newFamily, setNewFamily] = useState({
-    name: "",
+    username: "",
+    password: "",
+    email: "",
     relation: "",
-    age: "",    
+    
     occupation: "",
     relationship:"",
     
   });
 
   const columns = [
-    {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.id}
-          onChange={(e) => handleInputChange(e, record.key, "id")}
-        />
-      ),
-    },
+  
     {
       title: "Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "username",
+      key: "username",
       editable: true,
       render: (_, record) => (
         <Input
-          value={record.name}
-          onChange={(e) => handleInputChange(e, record.key, "name")}
+          value={record.username}
+          onChange={(e) => handleInputChange(e, record.key, "username")}
         />
       ),
     },
+    {
+        title: "Password",
+        dataIndex: "password",
+        key: "password",
+        editable: true,
+        render: (_, record) => (
+          <Input
+            value={record.password}
+            onChange={(e) => handleInputChange(e, record.key, "password")}
+          />
+        ),
+      },
+      {
+        title: "email",
+        dataIndex: "email",
+        key: "email",
+        editable: true,
+        render: (_, record) => (
+          <Input
+            value={record.email}
+            onChange={(e) => handleInputChange(e, record.key, "email")}
+          />
+        ),
+      },
     {
       title: "Relation",
       dataIndex: "relationship",
@@ -61,18 +76,7 @@ const FamilyDetails = ({ userid, familylist }) => {
         />
       ),
     },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.age}
-          onChange={(e) => handleInputChange(e, record.key, "age")}
-        />
-      ),
-    },
+    
     {
       title: "Occupation",
       dataIndex: "occupation",
@@ -211,12 +215,10 @@ const FamilyDetails = ({ userid, familylist }) => {
           data.forEach((item) => {
             if (!item.isOld) {
               const { key, ...remain } = item;
-              remain["username"]="dds2dfsdf"
-              remain["password"]="ddsd2fsdf"
-              remain["email"]="ddsdfsd4f@a.com"
-              remain['role'] = {"name":"Public"}
+            
+              remain['role'] = 2
               //remain["age"] = parseInt(item.age);
-              remain['parentid'] = userid
+              remain['parents'] = userid
 
               mutate({
                 resource: "users",
