@@ -247,7 +247,7 @@ const UserCreate = () => {
                   <Option value="married">Married</Option>
                   <Option value="unmarried">Unmarried</Option>
                   <Option value="divorced">Divorced</Option>
-                  <Option value="divorced">Waiting For Divorced</Option>
+                  <Option value="divorced">Waiting ForDivorced</Option>
                 </Select>
               </Form.Item>
             </Col>

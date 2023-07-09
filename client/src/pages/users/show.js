@@ -11,24 +11,28 @@ const { Title, Text } = Typography;
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { Avatar, Card } from 'antd';
 import Personal from './Personal';
-import PersonalDetails from './PersonalDetails';
+import PersonalDetails from './PersonalDetails';;
 const { Meta } = Card;
 
 const UserShow = () => {
 
   const { queryResult } = useShow({ metaData: { populate: ["businesses", "educations", "photo", "addresses"] } });
   const { data, isLoading } = queryResult;
-   console.log("User Show Data", data);
-  let businesslist = []
-  let educationlist = []
+  const record = data?.data;
+  console.log("USer show record", record)
+  // console.log("User Show Data", data);
+  let businesslist =  record?.businesses 
+  let educationlist = record?.educations
+  useEffect(()=>{
+    businesslist = record?.businesses ?? []
+    educationlist = record?.educations ?? []
+  },[data])
+
   if (isLoading) {
     return <h1>Still loading </h1>
   }
-  const record = data?.data;
-  businesslist = record?.businesses ?? []
-  educationlist = record?.educationlist ?? []
-  // console.log("record", record)
-
+  
+  
 
   let imgurl = record?.photo != null ? `${record?.photo?.formats?.thumbnail?.url}` : "https://www.gauchercommunity.org/wp-content/uploads/2020/09/avatar-placeholder-150x150.png"
   // console.log("imageeurl",imgurl)
@@ -69,17 +73,16 @@ const UserShow = () => {
     // console.log(key);
   };
 
-
-  return (<>
-
-
-
-    <Show isLoading={isLoading}>
+if(isLoading){
+  return <h1> Page loading</h1>
+}else {
+  console.log("business list in show", businesslist,"record =>", record.businesses)
+  return <Show isLoading={isLoading}>
 
     
       <Card
         style={{
-          width: 400,
+          width: 500,
           margin: "auto",
           background:" white",
           position: "relative",
@@ -126,9 +129,61 @@ const UserShow = () => {
 
       {/* <Collapse items={items} defaultActiveKey={['1']} onChange={onChange} /> */}
       <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-    </Show>
-  </>
-  );
+    </Show> 
+}
+
+  // return (<>
+
+
+
+  //   <Show isLoading={isLoading}>
+
+
+  //     <Card
+  //       style={{
+  //         width: 500,
+  //         margin: "auto",
+
+  //       }}
+  //     >
+  //       <div style={{
+  //         display: "flex",
+  //         flexDirection: "row"
+  //       }}>
+
+  //         <img style={{
+  //           borderRadius: '100%',
+  //           display: 'inline',
+  //         }}
+  //           alt="example"
+  //           src={imgurl}
+  //         />
+
+  //         <div style={{
+
+  //           // display: 'flex',
+  //           alignItems: 'center',
+  //           alignContent: 'center',
+  //           marginLeft: '60px'
+
+  //         }}>
+
+  //           <p>Name : <b>{record.firstname}  {record.lastname}</b></p>
+  //           {/* {console.log(record)} */}
+  //           <p>Caste: {record.cast}</p>
+  //           <p>DOB : {record.dob} </p>
+  //           <p>Marital : {record.marital} </p>
+  //         </div>
+  //       </div>
+
+  //     </Card>
+
+
+  //     {/* <Collapse items={items} defaultActiveKey={['1']} onChange={onChange} /> */}
+  //     <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+  //   </Show>
+  // </>
+  
 };
 
 export default UserShow;

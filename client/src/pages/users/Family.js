@@ -2,75 +2,81 @@ import React, { useState } from "react";
 import { Table, Input, Select, Button } from "antd";
 import { useCreate, useShow } from "@refinedev/core";
 
-const FamilyDetails = ({ userid, familyList }) => {
+const FamilyDetails = ({ mobile, userid, familylist }) => {
   const { queryResult } = useShow({
-    resource: "families",
+    resource: "users",
     userid: userid,
     metaData: { populate: ["members", "addresses"] },
   });
   const { data: familyData, isLoading } = queryResult;
   const [data, setData] = useState(
-    familyList?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
+    familylist?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
   );
   const [editingKey, setEditingKey] = useState("");
   const { mutate } = useCreate();
 
   const [newFamily, setNewFamily] = useState({
-    name: "",
+    username: "",
+    password: "",
+    email: "",
     relation: "",
-    age: "",
+    mobile: "",
     occupation: "",
+    relationship: "",
   });
 
   const columns = [
     {
-      title: "ID",
-      dataIndex: "id",
-      key: "id",
+      title: "Mobile Number",
+      dataIndex: "mobile",
+      key: "mobile",
       editable: true,
       render: (_, record) => (
         <Input
-          value={record.id}
-          onChange={(e) => handleInputChange(e, record.key, "id")}
+          value={record.mobile}
+          onChange={(e) => handleInputChange(e, record.key, "mobile")}
         />
       ),
     },
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.name}
-          onChange={(e) => handleInputChange(e, record.key, "name")}
-        />
-      ),
-    },
+    // {
+    //     title: "Relationship",
+    //     dataIndex: "relationship",
+    //     key: "relationship",
+    //     editable: true,
+    //     render: (_, record) => (
+    //       <Input
+    //         value={record.relationship}
+    //         onChange={(e) => handleInputChange(e, record.key, "relationship")}
+    //       />
+    //     ),
+    //   },
+    // {
+    //   title: "email",
+    //   dataIndex: "email",
+    //   key: "email",
+    //   editable: true,
+    //   render: (_, record) => (
+    //     <Input
+    //       value={record.email}
+    //       onChange={(e) => handleInputChange(e, record.key, "email")}
+    //     />
+    //   ),
+    // },
     {
       title: "Relation",
-      dataIndex: "relation",
-      key: "relation",
+      dataIndex: "relationship",
+      key: "relationship",
       editable: true,
       render: (_, record) => (
         <Input
-          value={record.relation}
-          onChange={(value) => handleInputChange(value, record.key, "relation")}
+          value={record.relationship}
+          onChange={(value) =>
+            handleInputChange(value, record.key, "relationship")
+          }
         />
       ),
     },
-    {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.age}
-          onChange={(e) => handleInputChange(e, record.key, "age")}
-        />
-      ),
-    },
+
     {
       title: "Occupation",
       dataIndex: "occupation",
@@ -79,30 +85,10 @@ const FamilyDetails = ({ userid, familyList }) => {
       render: (_, record) => (
         <Input
           value={record.occupation}
-          onChange={(value) => handleInputChange(value, record.key, "occupation")}
+          onChange={(value) =>
+            handleInputChange(value, record.key, "occupation")
+          }
         />
-      ),
-    },
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: (_, record) => (
-        <span>
-          {editingKey === record.key ? (
-            <>
-              <Button type="primary" onClick={() => save(record.key)}>
-                Save
-              </Button>
-              <Button onClick={cancel}>Cancel</Button>
-            </>
-          ) : (
-            <>
-              <Button onClick={() => edit(record.key)}>Edit</Button>
-              <Button onClick={() => remove(record.key)}>Remove</Button>
-            </>
-          )}
-        </span>
       ),
     },
   ];
@@ -209,9 +195,19 @@ const FamilyDetails = ({ userid, familyList }) => {
           data.forEach((item) => {
             if (!item.isOld) {
               const { key, ...remain } = item;
-              remain["age"] = parseInt(item.age);
+
+              remain["role"] = 2;
+              //remain["age"] = parseInt(item.age);
+              const random = "" + Math.floor(Math.random() * 10001);
+              console.log("mobile:--", mobile);
+              console.log("item:--", remain);
+              remain["parents"] = userid;
+              remain["email"] = remain.mobile + random + "a@a.com";
+              remain["username"] = remain.mobile + random 
+              remain["password"] = remain.mobile + random + "a@a.com";
+
               mutate({
-                resource: "families",
+                resource: "users",
                 values: remain,
               });
               item["isOld"] = true;
@@ -235,15 +231,16 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === "select" ? (
-    <Select style={{ width: "100%" }}>
-      <Select.Option value="option1">Option 1</Select.Option>
-      <Select.Option value="option2">Option 2</Select.Option>
-      <Select.Option value="option3">Option 3</Select.Option>
-    </Select>
-  ) : (
-    <Input />
-  );
+  const inputNode =
+    inputType === "select" ? (
+      <Select style={{ width: "100%" }}>
+        <Select.Option value="option1">Option 1</Select.Option>
+        <Select.Option value="option2">Option 2</Select.Option>
+        <Select.Option value="option3">Option 3</Select.Option>
+      </Select>
+    ) : (
+      <Input />
+    );
   return (
     <td {...restProps}>
       {editing ? (
