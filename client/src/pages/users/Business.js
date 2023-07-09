@@ -3,12 +3,15 @@ import { Table, Input, Select, Button, Form } from "antd";
 import { useCreate, useShow } from "@refinedev/core";
 
 const BusinessDetails = ({ userid, businessList }) => {
+  console.log("UserId", userid)
   const { queryResult } = useShow({
     resource: "businesses",
     userid: userid,
-    metaData: { populate: ["members", "addresses"] },
+    metaData: { populate: ["business", "members", "addresses"] },
   });
-  const { data: businessData, isLoading } = queryResult;
+  
+  const {  businessData, isLoading } = queryResult;
+  console.log("queryResult",businessData)
   const [data, setData] = useState(
     businessList?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
   );
@@ -96,7 +99,9 @@ const BusinessDetails = ({ userid, businessList }) => {
       render: (_, record) => (
         <Input
           value={record.businessrole}
-          onChange={(value) => handleInputChange(value, record.key, "businessrole")}
+          onChange={(value) =>
+            handleInputChange(value, record.key, "businessrole")
+          }
         />
       ),
     },
@@ -132,30 +137,10 @@ const BusinessDetails = ({ userid, businessList }) => {
       render: (_, record) => (
         <Input
           value={record.businesssector}
-          onChange={(value) => handleInputChange(value, record.key, "businesssector")}
+          onChange={(value) =>
+            handleInputChange(value, record.key, "businesssector")
+          }
         />
-      ),
-    },
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: (_, record) => (
-        <span>
-          {editingKey === record.key ? (
-            <>
-              <Button type="primary" onClick={() => save(record.key)}>
-                Save
-              </Button>
-              <Button onClick={cancel}>Cancel</Button>
-            </>
-          ) : (
-            <>
-              <Button onClick={() => edit(record.key)}>Edit</Button>
-              <Button onClick={() => remove(record.key)}>Remove</Button>
-            </>
-          )}
-        </span>
       ),
     },
   ];
@@ -259,18 +244,19 @@ const BusinessDetails = ({ userid, businessList }) => {
       </div>
       <Table
         components={components}
-        bordered
         dataSource={data}
         columns={columnsWithEditability}
-        rowClassName={() => "editable-row"}
+        // rowClassName={() => "editable-row"}
         pagination={false}
       />
-      <Button type="primary"
+      <Button
+        type="primary"
         onClick={() => {
-          console.log("save data", data);
+          // console.log("save data", data);
           data.forEach((item) => {
             if (!item.isOld) {
               const { key, ...remain } = item;
+              remain["userid"] = userid
               remain["turnover"] = parseFloat(item.turnover);
               mutate({
                 resource: "businesses",
@@ -297,15 +283,16 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === "select" ? (
-    <Select style={{ width: "100%" }}>
-      <Select.Option value="option1">Option 1</Select.Option>
-      <Select.Option value="option2">Option 2</Select.Option>
-      <Select.Option value="option3">Option 3</Select.Option>
-    </Select>
-  ) : (
-    <Input />
-  );
+  const inputNode =
+    inputType === "select" ? (
+      <Select style={{ width: "100%" }}>
+        <Select.Option value="option1">Option 1</Select.Option>
+        <Select.Option value="option2">Option 2</Select.Option>
+        <Select.Option value="option3">Option 3</Select.Option>
+      </Select>
+    ) : (
+      <Input />
+    );
   return (
     <td {...restProps}>
       {editing ? (

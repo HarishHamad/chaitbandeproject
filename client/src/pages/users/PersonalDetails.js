@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function PersonalDetails(props) {
     const record = props.record.data;
-    console.log("record", (record))
+    // console.log("record", (record))
 
     // const items = [
     //     {
@@ -41,9 +41,9 @@ export default function PersonalDetails(props) {
             // render: () => <Badge status="success" text="Finished" />,
         },
         {
-            title: 'Mobile number',
-            dataIndex: 'mobile',
-            key: 'mobile',
+            title: 'Gotra',
+            dataIndex: 'gotra',
+            key: 'gotra',
         },
         {
             title: 'Jatti',
@@ -81,7 +81,7 @@ export default function PersonalDetails(props) {
             username: record.username,
             email: record.email,
             father: record.father,
-            mobile: record.mobile,
+            gotra: record.gotra,
             jatti: record.jati,
         });
     }
@@ -123,9 +123,9 @@ export default function PersonalDetails(props) {
                 render: () => <Badge status="success" text="Finished" />,
             },
             {
-                title: 'Mobile number',
-                dataIndex: 'mobile',
-                key: 'mobile',
+                title: 'Gotra',
+                dataIndex: 'gotra',
+                key: 'gotra',
             },
             {
                 title: 'Jatti',

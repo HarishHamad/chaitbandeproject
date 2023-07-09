@@ -18,7 +18,7 @@ const UserShow = () => {
 
   const { queryResult } = useShow({ metaData: { populate: ["businesses", "educations", "photo", "addresses"] } });
   const { data, isLoading } = queryResult;
-  // console.log("User Show Data", data);
+   console.log("User Show Data", data);
   let businesslist = []
   let educationlist = []
   if (isLoading) {
@@ -76,13 +76,20 @@ const UserShow = () => {
 
     <Show isLoading={isLoading}>
 
-
+    
       <Card
         style={{
           width: 400,
           margin: "auto",
-
+          background:" white",
+          position: "relative",
+          display:" flex",
+          alignItems: "flex-end",
+          transition: "0.4s ease-out",
+          boxShadow: "0px 7px 10px rgba(black, 0.5)",
+          
         }}
+        
       >
         <div style={{
           display: "flex",
