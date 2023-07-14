@@ -1,9 +1,13 @@
 import React from 'react'
 import {  Table } from 'antd';
+import BusinessDetails from './Business';
 
 const PersonalDetails = (props) => {
     const record = props.record.data;
-    console.log("record", (record))
+    // console.log("record", (record.addresses[0].landmark));
+    //  console.log("one by one", (record.email),(record.id),(record.username),(record.father),(record.dob))
+
+   
     //  start expandedRowRender
     const expandedRowRender = () => {
          // Start code 
@@ -19,15 +23,11 @@ const PersonalDetails = (props) => {
                 dataIndex: 'mother',
                 key: 'mother',
             },
+           
             {
-                title: 'Mobile number',
-                dataIndex: 'mobile',
-                key: 'mobile',
-            },
-            {
-                title: 'Divyang',
-                dataIndex: 'isdivyang',
-                key: 'isdivyang',
+                title: 'Divyang Description',
+                dataIndex: 'divyangdescription',
+                key: 'divyangdescription',
             }
         ];
         const data = [];
@@ -40,7 +40,7 @@ const PersonalDetails = (props) => {
                 mobile: record.mobile,
                 jatti: record.jati,
                 occupation:record.occupation,
-                isdivyang:record.isdivyang,
+                divyangdescription:record.divyangdescription,
                 gotra:record.gotra,
                 mother:record.mother,
             });
@@ -78,6 +78,7 @@ const PersonalDetails = (props) => {
                 dataIndex: 'jatti',
                 key: 'jatti',
             },
+           
          
         ];
         const data = [];
@@ -88,6 +89,7 @@ const PersonalDetails = (props) => {
                 email: record.email,
                 father: record.father,
                 jatti: record.jati,
+                divyangdescription : record.divyangdescription
             });
         }
         // End code 

@@ -94,7 +94,7 @@ const UserList = () => {
             )}
           />
           <Table.Column
-            dataIndex="id"
+            dataIndex="firstname"
             key="id"
             title="Name"
             defaultSortOrder={getDefaultSortOrder("id", sorter)}

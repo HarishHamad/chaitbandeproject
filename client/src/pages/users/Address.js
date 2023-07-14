@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { Table, Input, Button } from "antd";
 import { useCreate } from "@refinedev/core";
 
-const AddressDetails = ({userid}) => {
-  const [data, setData] = useState([]);
+const AddressDetails = ({userid, addresslist}) => {
+  console.log("addresslist",addresslist)
+  // const [data, setData] = useState([]);
   const { mutate } = useCreate();
-
+  const [data, setData] = useState(
+    addresslist?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
+  );
   const [editingKey, setEditingKey] = useState("");
   const [newAddress, setNewAddress] = useState({
     addresstype: "",
@@ -258,7 +261,7 @@ const AddressDetails = ({userid}) => {
             // remain["till"]=formattedTillDate
           
             console.log("remain",remain)  
-           remain['userid']= userid
+           remain['users_permissions_users']= userid
             mutate({
               resource: "addresses",
               values: remain,

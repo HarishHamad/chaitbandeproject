@@ -1,22 +1,27 @@
 import React, { useState } from "react";
-import { Table, Input, Select, Button } from "antd";
+import { Table, Input, Select, Button,Modal } from "antd";
 import { useCreate, useShow } from "@refinedev/core";
+import ModelUser from "./modelUser" 
+const FamilyDetails = ({ mobile, userid, children, photo }) => {
+  console.log("families list component ", children);
+  // const { queryResult } = useShow({
+  //   resource: "users",
+  //   userid: userid,
+  //   metaData: { populate: ["members", "addresses"] },
+  // });
+  // const { data: familyData, isLoading } = queryResult;
+  // console.log(userid)
 
-const FamilyDetails = ({ mobile, userid, familylist }) => {
-  const { queryResult } = useShow({
-    resource: "users",
-    userid: userid,
-    metaData: { populate: ["members", "addresses"] },
-  });
-  const { data: familyData, isLoading } = queryResult;
   const [data, setData] = useState(
-    familylist?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
+    children?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
   );
+
   const [editingKey, setEditingKey] = useState("");
   const { mutate } = useCreate();
 
   const [newFamily, setNewFamily] = useState({
     username: "",
+    parentid: "",
     password: "",
     email: "",
     relation: "",
@@ -104,20 +109,21 @@ const FamilyDetails = ({ mobile, userid, familylist }) => {
   };
 
   const handleAdd = () => {
-    const newData = {
-      key: `${data.length + 1}`,
-      name: newFamily.name,
-      relation: newFamily.relation,
-      age: newFamily.age,
-      occupation: newFamily.occupation,
-    };
-    setData([...data, newData]);
-    setNewFamily({
-      name: "",
-      relation: "",
-      age: "",
-      occupation: "",
-    });
+    // console.log("calling",<modelUser/>)
+    // const newData = {
+    //   key: `${data.length + 1}`,
+    //   name: newFamily.name,
+    //   relation: newFamily.relation,
+    //   age: newFamily.age,
+    //   occupation: newFamily.occupation,
+    // };
+    // setData([...data, newData]);
+    // setNewFamily({
+    //   name: "",
+    //   relation: "",
+    //   age: "",
+    //   occupation: "",
+    // });
   };
 
   const handleRemove = (key) => {
@@ -129,9 +135,9 @@ const FamilyDetails = ({ mobile, userid, familylist }) => {
     setEditingKey("");
   };
 
-  const handleCancel = () => {
-    setEditingKey("");
-  };
+  // const handleCancel = () => {
+  //   setEditingKey("");
+  // };
 
   const isEditing = (record) => record.key === editingKey;
 
@@ -169,17 +175,29 @@ const FamilyDetails = ({ mobile, userid, familylist }) => {
     handleSave(key);
   };
 
-  const cancel = () => {
-    handleCancel();
+  // const cancel = () => {
+  //   handleCancel();
+  // };
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const showModal = () => {
+    console.log("clicked")
+    setIsModalOpen(true);
   };
+  // const handleOk = () => {
+  //   setIsModalOpen(false);
+  // };
+  // const handleCancel = () => {
+  //   setIsModalOpen(false);
+  // };
 
   return (
     <div>
       <div>
-        <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16 }}>
-          + Add Family Member
+        <Button type="primary" onClick={showModal}>
+          Add Family Members
         </Button>
       </div>
+      <ModelUser isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} parent_id={userid}></ModelUser>
       <Table
         components={components}
         bordered
@@ -203,7 +221,7 @@ const FamilyDetails = ({ mobile, userid, familylist }) => {
               console.log("item:--", remain);
               remain["parents"] = userid;
               remain["email"] = remain.mobile + random + "a@a.com";
-              remain["username"] = remain.mobile + random 
+              remain["username"] = remain.mobile + random;
               remain["password"] = remain.mobile + random + "a@a.com";
 
               mutate({

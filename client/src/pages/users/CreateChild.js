@@ -9,23 +9,6 @@ import Education from './Education';
 const onChange = (key) => {
   console.log(key);
 };
-const items = [
-  {
-    key: '1',
-    label: `Personal Profile`,
-    children: <Personal/>,
-  },
-  {
-    key: '2',
-    label: `Business Profile`,
-    children: <Business/>,
-  },
-  {
-    key: '3',
-    label: `Education Profile`,
-    children: <Education/>,
-  },
-];
 
 const CreateChild = ({parentId, isModalOpen, setIsModalOpen}) => {
     console.log("parentId",parentId)
