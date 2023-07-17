@@ -13,7 +13,8 @@ const styles = {
 };
 
 const OrganizationalChart = (props) => {
-  // console.log("props OrganizationalChart", props.data)
+
+  console.log("props OrganizationalChart", props.children)
   const d3Container = useRef(null);
   const [cardShow, setCardShow] = useState(false);
   const [employeeId, setEmployeeId] = useState("");
@@ -44,6 +45,7 @@ const OrganizationalChart = (props) => {
           );
         })
         .nodeContent((d) => {
+          console.log("ddd",d)
           return ReactDOMServer.renderToStaticMarkup(
             <CustomNodeContent {...d} />
           );

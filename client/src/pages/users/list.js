@@ -23,7 +23,7 @@ const UserList = () => {
     },
   });
   if (typeof tableProps.dataSource == "object") {
-    console.log("user tableProps", tableProps.dataSource[0]?.photo?.url);
+    console.log("user tableProps", tableProps);
   }
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBusinessModalOpen, setIsBusinessModalOpen] = useState(false);

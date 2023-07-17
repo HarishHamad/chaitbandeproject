@@ -1,7 +1,6 @@
-import { Row,Col } from "antd";
+import { Row, Col } from "antd";
 import React, { Children } from "react";
 import { FaBuilding } from "react-icons/fa";
-
 
 const styles = {
   nodeContainer: {
@@ -28,10 +27,10 @@ const styles = {
     textAlign: "center",
   },
   nodeTeamName: {
-    marginBottom: "0rem",
+    marginBottom: "-20px",
     color: "#fef9ef",
     fontSize: "1.5rem",
-    marginLeft:"130px"
+    marginLeft: "130px",
   },
   nodeTeamMemberImg: {
     width: "50px",
@@ -41,11 +40,10 @@ const styles = {
   },
   nodeImg: {
     width: "90px",
-    height: "90px",
-    borderRadius: "1rem",
+    height: "95px",
+    borderRadius: "3rem",
     marginRight: "6px",
-    marginTop: "-70px"
-  
+    marginTop: "-40px",
   },
   nodeInfo: {
     marginLeft: "1.5rem",
@@ -78,24 +76,21 @@ const styles = {
 };
 
 const CustomNodeContent = (props) => {
-  console.log("CustomNodeContent ", props?.data,
-    " props._children ", props?.children
-  );
+  // console.log(
+  //   "CustomNodeContent ",
+  //   props?.data,
+  //   " props._children ",
+  //   props?.children
+  // );
   return (
     <>
       <div style={styles.nodeContainer}>
         <div style={styles.nodeDetails}>
           {props?.data?.email === "" ? (
             <div style={styles.nodeContent}>
-              {/* <img
-                style={styles.imgUrl}
-                src={props?.data?.photo?.formats?.thumbnail?.url ?? ""}
-                alt="Profile"
-              /> */}
               <div style={styles.nodeInfo}>
-                {/* <div style={styles.username}>{props?.data?.username}</div> */}
                 <div style={styles.firstname}>{props?.data?.firstname}</div>
-                
+
                 {props?.data?.email && (
                   <div style={styles.nodeDepartment}>
                     <FaBuilding style={styles.icon} />
@@ -110,9 +105,11 @@ const CustomNodeContent = (props) => {
                 <Col>
                   <div style={styles.nodeTeamName}>
                     {props?.data?.firstname ?? ""}
-                    <br/>
+                    <br />
                     {props?.data?.occupation ?? ""}
+                   
                   </div>
+                  
                 </Col>
                 <Col>
                   <img
@@ -122,23 +119,6 @@ const CustomNodeContent = (props) => {
                   />
                 </Col>
               </Row>
-
-              {/* {Array.isArray(props._children) &&
-                props._children.length > 1 &&
-                props._children !== null &&
-                props._children
-                  .slice(0, 1)
-                  .map((children) => (
-                    <img
-                      key={Children?.data?.id}
-                      style={styles.nodeTeamMemberImg}
-                      src={
-                        Children?.data?.photo?.formats?.thumbnail?.url ??
-                        "https://hphlms.s3.amazonaws.com/Harish_Hammad_44972948b6.jpg"
-                      }
-                      alt="team member"
-                    />
-                  ))} */}
             </div>
           )}
         </div>

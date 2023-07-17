@@ -37,7 +37,7 @@ const UserCreate = () => {
   const { formProps, getInputProps, saveButtonProps } = useForm();
   const handleFormFinish = (values) => {
     values = { ...values, role: 2 };
-    console.log("values", values);
+ 
     // values={...values, classes:selectedClassId,subject:selectedSubjectId,topics:selectedTopicId}
 
     formProps.onFinish?.(mediaUploadMapper(values));

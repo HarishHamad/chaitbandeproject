@@ -13,31 +13,55 @@ const { Title, Text } = Typography;
 import {  Card } from "antd";
 
 import PersonalDetails from "./PersonalDetails";
-import FamilyDetails from "./Family";
+
 import OrganizationalChart from "./orgChart";
+import HCMFamily from "./HCMFamily";
 
 const { Meta } = Card;
 
 const UserShow = () => {
   const { queryResult } = useShow({
     metaData: {
-      populate: ["businesses", "educations", "photo", "addresses", "families","users" ],
+      populate: ["businesses", "educations", "photo", "addresses", "families","users","users.photo","users.children","users.users","users.users.photo" ],
     },
+
+    // Use simpleList and filter 
+    // meta: {
+    //   populate: ["photo"],
+    // },
   });
   // console.log("queryResult",queryResult)
+  // console.log("user",users)
   const { data, isLoading } = queryResult;
   const record = data?.data;
+ 
   // console.log("USer show record", record);
-   console.log("User Show Data", data);
+  //  console.log("User Show Data", data);
   let businesslist = record?.businesses;
   let educationlist = record?.educations;
   let addresslist = record?.addresses;
   let familylist = record?.families;
-  let children = record?.users
-  console.log("children,",children)
-  let modified = children?children.map((child)=>{return {...child, parentId:record.id}}):[]
-  modified.push(record)
-  console.log("modified", modified)
+  let children = record?.users;
+  // console.log("children",children)
+  let modified=[]
+  modified.push(record);
+  for(const childObj of record?.users ?? []){
+    // console.log("children,",childObj)
+    let childrenObj =  {...childObj, parentId:record?.id}
+    for(const Obj of childObj?.users){
+      // console.log("obj",Obj)
+      let childrenChildObj=  {...Obj, parentId:childObj?.id}
+      modified.push(childrenChildObj)
+
+    }
+    modified.push(childrenObj)
+
+  }
+  
+  
+  
+ 
+  
   useEffect(() => {
     businesslist = record?.businesses ?? [];
     educationlist = record?.educations ?? [];
@@ -81,7 +105,7 @@ const UserShow = () => {
     {
       key: "4",
       label: `families`,
-      children: <FamilyDetails userid={record?.id} children={children} />,
+      children: <HCMFamily userid={record?.id} children={children} />,
     },
     {
       key: "5",
@@ -94,24 +118,19 @@ const UserShow = () => {
       key: "6",
       label: `Family Tree`,
       children: (
-        <OrganizationalChart data={modified} />
+        <OrganizationalChart data={modified} children={children}/>
       ),
     },
   ];
 
   const onChange = (key) => {
-    // console.log(key);
+    
   };
 
   if (isLoading) {
     return <h1> Page loading</h1>;
   } else {
-    console.log(
-      "business list in show",
-      businesslist,
-      "record =>",
-      record.businesses
-    );
+    
     return (
       <Show isLoading={isLoading}>
         <Card
@@ -169,53 +188,7 @@ const UserShow = () => {
     );
   }
 
-  // return (<>
 
-  //   <Show isLoading={isLoading}>
-
-  //     <Card
-  //       style={{
-  //         width: 500,
-  //         margin: "auto",
-
-  //       }}
-  //     >
-  //       <div style={{
-  //         display: "flex",
-  //         flexDirection: "row"
-  //       }}>
-
-  //         <img style={{
-  //           borderRadius: '100%',
-  //           display: 'inline',
-  //         }}
-  //           alt="example"
-  //           src={imgurl}
-  //         />
-
-  //         <div style={{
-
-  //           // display: 'flex',
-  //           alignItems: 'center',
-  //           alignContent: 'center',
-  //           marginLeft: '60px'
-
-  //         }}>
-
-  //           <p>Name : <b>{record.firstname}  {record.lastname}</b></p>
-  //           {/* {console.log(record)} */}
-  //           <p>Caste: {record.cast}</p>
-  //           <p>DOB : {record.dob} </p>
-  //           <p>Marital : {record.marital} </p>
-  //         </div>
-  //       </div>
-
-  //     </Card>
-
-  //     {/* <Collapse items={items} defaultActiveKey={['1']} onChange={onChange} /> */}
-  //     <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-  //   </Show>
-  // </>
 };
 
 export default UserShow;
