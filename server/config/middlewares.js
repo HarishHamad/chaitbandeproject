@@ -11,6 +11,7 @@ module.exports = [
       headers: '*'
     }
   },
+  
   'strapi::logger',
   'strapi::query',
   'strapi::body',
