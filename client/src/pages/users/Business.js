@@ -99,7 +99,9 @@ const BusinessDetails = ({ userid, businesslist }) => {
       render: (_, record) => (
         <Input
           value={record.businessrole}
-          onChange={(value) => handleInputChange(value, record.key, "businessrole")}
+          onChange={(value) =>
+            handleInputChange(value, record.key, "businessrole")
+          }
         />
       ),
     },
@@ -137,30 +139,10 @@ const BusinessDetails = ({ userid, businesslist }) => {
       render: (_, record) => (
         <Input
           value={record.businesssector}
-          onChange={(value) => handleInputChange(value, record.key, "businesssector")}
+          onChange={(value) =>
+            handleInputChange(value, record.key, "businesssector")
+          }
         />
-      ),
-    },
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: (_, record) => (
-        <span>
-          {editingKey === record.key ? (
-            <>
-              <Button type="primary" onClick={() => save(record.key)}>
-                Save
-              </Button>
-              <Button onClick={cancel}>Cancel</Button>
-            </>
-          ) : (
-            <>
-              <Button onClick={() => edit(record.key)}>Edit</Button>
-              <Button onClick={() => remove(record.key)}>Remove</Button>
-            </>
-          )}
-        </span>
       ),
     },
   ];
@@ -264,15 +246,15 @@ const BusinessDetails = ({ userid, businesslist }) => {
       </div>
       <Table
         components={components}
-        bordered
         dataSource={data}
         columns={columnsWithEditability}
-        rowClassName={() => "editable-row"}
+        // rowClassName={() => "editable-row"}
         pagination={false}
       />
-      <Button type="primary"
+      <Button
+        type="primary"
         onClick={() => {
-          console.log("save data", data);
+          // console.log("save data", data);
           data.forEach((item) => {
             if (!item.isOld) {
               const { key, ...remain } = item;
@@ -305,15 +287,16 @@ const EditableCell = ({
   children,
   ...restProps
 }) => {
-  const inputNode = inputType === "select" ? (
-    <Select style={{ width: "100%" }}>
-      <Select.Option value="option1">Option 1</Select.Option>
-      <Select.Option value="option2">Option 2</Select.Option>
-      <Select.Option value="option3">Option 3</Select.Option>
-    </Select>
-  ) : (
-    <Input />
-  );
+  const inputNode =
+    inputType === "select" ? (
+      <Select style={{ width: "100%" }}>
+        <Select.Option value="option1">Option 1</Select.Option>
+        <Select.Option value="option2">Option 2</Select.Option>
+        <Select.Option value="option3">Option 3</Select.Option>
+      </Select>
+    ) : (
+      <Input />
+    );
   return (
     <td {...restProps}>
       {editing ? (

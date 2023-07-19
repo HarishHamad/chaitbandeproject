@@ -19,11 +19,11 @@ const UserList = () => {
   const { tableProps, sorter } = useTable({
     initialSorter: [{ field: "id", order: "desc" }],
     meta: {
-      populate: ["photo"],
+      populate: ["pictures"],
     },
   });
   if (typeof tableProps.dataSource == "object") {
-    console.log("user tableProps", tableProps.dataSource[0]?.photo?.url);
+    console.log("user tableProps", tableProps);
   }
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBusinessModalOpen, setIsBusinessModalOpen] = useState(false);
@@ -83,9 +83,9 @@ const UserList = () => {
             sorter={{ multiple: 3 }}
             render={(val, record) => (
               <>
-                {record.photo !== null ? (
+                {record.pictures !== null &&record.pictures.length>0? (
                   <ImageField
-                    value={record.photo.formats.thumbnail.url}
+                    value={record?.pictures[0].formats.thumbnail.url}
                     width={50}
                     height={50}
                   />
@@ -94,9 +94,16 @@ const UserList = () => {
             )}
           />
           <Table.Column
-            dataIndex="id"
+            dataIndex="firstname"
             key="id"
             title="Name"
+            defaultSortOrder={getDefaultSortOrder("id", sorter)}
+            sorter={{ multiple: 2 }}
+          />
+            <Table.Column
+            dataIndex="mobile"
+            key="id"
+            title="mobile"
             defaultSortOrder={getDefaultSortOrder("id", sorter)}
             sorter={{ multiple: 2 }}
           />

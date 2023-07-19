@@ -1,7 +1,7 @@
 import { Create, useForm } from "@refinedev/antd";
 
 import { getValueProps, mediaUploadMapper } from "@refinedev/strapi-v4";
-import { Col, DatePicker, Form, Input, Row, Select, Upload } from "antd";
+import { Avatar, Col, DatePicker, Form, Input, Row, Select, Upload } from "antd";
 import Business from "./Business";
 import Personal from "./Personal";
 
@@ -37,7 +37,7 @@ const UserCreate = () => {
   const { formProps, getInputProps, saveButtonProps } = useForm();
   const handleFormFinish = (values) => {
     values = { ...values, role: 2 };
-    console.log("values", values);
+ 
     // values={...values, classes:selectedClassId,subject:selectedSubjectId,topics:selectedTopicId}
 
     formProps.onFinish?.(mediaUploadMapper(values));
@@ -74,7 +74,11 @@ const UserCreate = () => {
       <Create saveButtonProps={saveButtonProps}>
         <Form {...formProps} layout="vertical" onFinish={handleFormFinish}>
           <Row gutter={24}>
-            <Col span={24}>
+            
+              {/* <Form.Item style={{marginLeft:"300px" , marginTop:"40px"}}>
+                <Avatar/>
+              </Form.Item> */}
+              <Col span={24}>
             <Form.Item
               name="photo"
               valuePropName="photo"
@@ -90,7 +94,7 @@ const UserCreate = () => {
                 }}
                 accept="image/*"
                 listType="picture-card"
-                fileList={fileList}
+                fileList={fileList} 
                 onChange={onChange}
                 onPreview={onPreview}
               >
@@ -210,8 +214,8 @@ const UserCreate = () => {
 
           <Row gutter={24}>
             <Col span={8}>
-              <Form.Item label="Caste" name="cast">
-                <Select placeholder="Select Cast">
+              <Form.Item label="Category" name="occupation">
+                <Select placeholder="Select Category">
                   <Option value="general">General</Option>
                   <Option value="obc">OBC</Option>
                   <Option value="sc/st">SC/ST</Option>
@@ -243,17 +247,43 @@ const UserCreate = () => {
                   <Option value="married">Married</Option>
                   <Option value="unmarried">Unmarried</Option>
                   <Option value="divorced">Divorced</Option>
+                  <Option value="divorced">Waiting ForDivorced</Option>
                 </Select>
               </Form.Item>
             </Col>
-            {/* <Col span={8}>
-              <Form.Item label="ISDivyang" name="isdivyang">
-                <Select placeholder="Select divyang">
-                  <Option value="YES">YES</Option>
-                  <Option value="NO">NO</Option>    
+            <Col span={8}>
+              <Form.Item
+                label="Gotra"
+                name="gotra"
+                rules={[
+                  {
+                    required: true,
+                    message: "Please select your Gotra",
+                  },
+                ]}
+              >
+                <Select placeholder="Gotra">
+                  <Option value="hammad">Hammad</Option>
+                  <Option value="mulewa">Mulewa</Option>
+                  <Option value="bhayal">Bhayal</Option>
+                  <Option value="kag">kag</Option>
+                  <Option value="rathore">Rathore</Option>
+                  <Option value="devda">Devda</Option>
+                  <Option value="parwar">Parwar</Option>
+                  <Option value="solanki">Solanki</Option>
+                  <Option value="padiyar">Padiyar</Option>
+                  <Option value="satpuda">Satpuda</Option>
+                  <Option value="septa">Septa</Option>
+                  <Option value="sencha">Sencha</Option>
+                  <Option value="choyal">Choyal</Option>
+                  <Option value="aaglecha">Aaglecha</Option>
+                  <Option value="varfa">Varfa</Option>
+                  <Option value="parihar">Parihar</Option>
+                  <Option value="gehlot">Gehlot</Option>
+                  <Option value="sindadda">Sindadda</Option>
                 </Select>
               </Form.Item>
-            </Col> */}
+            </Col>
             <Col span={8}>
               <Form.Item label="DivyangDescription" name="divyangdescription">
                 <TextArea
