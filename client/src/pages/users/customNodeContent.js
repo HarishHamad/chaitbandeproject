@@ -1,6 +1,6 @@
-import { Row, Col } from "antd";
+import { Row, Col, Space } from "antd";
 import React, { Children } from "react";
-import { FaBuilding } from "react-icons/fa";
+import { Avatar, Badge } from "antd";
 
 const styles = {
   nodeContainer: {
@@ -75,15 +75,18 @@ const styles = {
   },
 };
 
+
 const CustomNodeContent = (props) => {
-  // console.log(
-  //   "CustomNodeContent ",
-  //   props?.data,
-  //   " props._children ",
-  //   props?.children
-  // );
+ 
+                   
+  console.log(
+    "CustomNodeContent ",
+    props,
+   
+  );
   return (
     <>
+    
       <div style={styles.nodeContainer}>
         <div style={styles.nodeDetails}>
           {props?.data?.email === "" ? (
@@ -107,14 +110,13 @@ const CustomNodeContent = (props) => {
                     {props?.data?.firstname ?? ""}
                     <br />
                     {props?.data?.occupation ?? ""}
-                   
                   </div>
-                  
                 </Col>
                 <Col>
+
                   <img
                     style={styles.nodeImg}
-                    src={props?.data?.photo?.formats?.thumbnail?.url ?? ""}
+                    src={props?.data?.pictures[0]?.formats?.thumbnail?.url ?? ""}
                     alt="Profile"
                   />
                 </Col>

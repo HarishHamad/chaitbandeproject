@@ -40,6 +40,7 @@ import UserList from "./pages/users/list";
 import UserCreate from "./pages/users/create";
 import UserEdit from "./pages/users/edit";
 import UserShow from "./pages/users/show";
+import DetailsCard from "./pages/users/DetailsCard";
 
 
 const ABLY_API_KEY = process.env.REACT_APP_ABLY_API_KEY;
@@ -197,9 +198,7 @@ const App = () => {
     }
     return (
         <BrowserRouter>
-            {/* <GitHubBanner /> */}
-
-
+           
             <Refine
                 authProvider={authProvider}
                 dataProvider={DataProvider(API_URL + "/api", axiosInstance)}
@@ -225,7 +224,7 @@ const App = () => {
                                             <Outlet />
                                         </CanAccess>
                                     </ThemedLayoutV2>
-                               
+
                             </Authenticated>
                         }
                     >
@@ -245,6 +244,7 @@ const App = () => {
                             <Route path="create" element={<UserCreate />} />
                             <Route path="show/:id" element={<UserShow />} />
                             <Route path="edit/:id" element={<UserEdit />} />
+                            {/* <Route path="detail/:id" element={<DetailsCard/>}/> */}
                         </Route>
                     </Route>
                     <Route

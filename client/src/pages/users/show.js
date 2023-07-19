@@ -22,15 +22,15 @@ const { Meta } = Card;
 const UserShow = () => {
   const { queryResult } = useShow({
     metaData: {
-      populate: ["businesses", "educations", "photo", "addresses", "families","users","users.photo","users.children","users.users","users.users.photo" ],
+      populate: ["businesses", "educations", "pictures", "addresses", "families","users","users.pictures","users.children","users.users","users.users.pictures" ],
     },
 
     // Use simpleList and filter 
     // meta: {
-    //   populate: ["photo"],
+    //   populate: ["pictures"],
     // },
   });
-  // console.log("queryResult",queryResult)
+  console.log("queryResult",queryResult)
   // console.log("user",users)
   const { data, isLoading } = queryResult;
   const record = data?.data;
@@ -75,8 +75,8 @@ const UserShow = () => {
   }
 
   let imgurl =
-    record?.photo != null
-      ? `${record?.photo?.formats?.thumbnail?.url}`
+  record?.pictures[0] != null
+      ? `${record?.pictures[0]?.formats?.thumbnail?.url}`
       : "https://www.gauchercommunity.org/wp-content/uploads/2020/09/avatar-placeholder-150x150.png";
   // console.log("imageeurl",imgurl)
   const items = [
@@ -118,7 +118,7 @@ const UserShow = () => {
       key: "6",
       label: `Family Tree`,
       children: (
-        <OrganizationalChart data={modified} children={children}/>
+        <OrganizationalChart data={modified} children={children} count={(data?.data?.users).length}/>
       ),
     },
   ];

@@ -111,8 +111,8 @@ const HCMModaluser = ({ parent_id, isModalOpen, setIsModalOpen }) => {
               <Row gutter={24}>
                 <Col span={24}>
                   <Form.Item
-                    name="photo"
-                    valuePropName="photo"
+                    name="pictures"
+                    valuePropName="pictures"
                     getValueProps={(data) => getValueProps(data, API_URL)}
                     style={{ marginLeft: "460px" }}
                   >

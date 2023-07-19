@@ -55,7 +55,7 @@ const DashboardList = () => {
       key: "businesses",
       render: (businesses) => (
         <ul>
-          {businesses.map((business) => (
+          {businesses?.map((business) => (
             <li key={business.id}>
               {business.businessrole}- {business.category}-
               {business.businessname}-{business.businessowner}
@@ -70,7 +70,7 @@ const DashboardList = () => {
       key: "educations",
       render: (educations) => (
         <ul>
-          {educations.map((education) => (
+          {educations?.map((education) => (
             <li key={education.id}>{education.name}</li>
           ))}
         </ul>

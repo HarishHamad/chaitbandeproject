@@ -100,12 +100,12 @@ const styles = {
 };
 
 const EmployeeDetailsCard = (props) => {
-  const [employeesList,setEmployeesList] = useState([])
+  const [employeesList, setEmployeesList] = useState([]);
   // console.log("props", props)
-  useEffect(()=>{
-    setEmployeesList(props?.employees)
-  },[])
-  // console.log("props in employee detais", props?.employee?.photo?.formats?.thumbnail?.url)
+  useEffect(() => {
+    setEmployeesList(props?.employees);
+  }, []);
+  // console.log("props in employee detais", props?.employee?.pictures?.formats?.thumbnail?.url)
   return (
     <div style={styles.card}>
       <button style={styles.cardCloseBtn} onClick={props.handleClose}>
@@ -116,7 +116,7 @@ const EmployeeDetailsCard = (props) => {
           <div style={styles.cardHeader}>
             <img
               style={styles.cardImg}
-              src={props?.employee?.photo?.formats?.thumbnail?.url ?? ""}
+              src={props?.employee?.pictures[0]?.formats?.thumbnail?.url ?? ""}
               alt="Profile"
             />
             <h2 style={styles.cardName}>{props?.employee?.firstname ?? ""}</h2>
@@ -135,7 +135,9 @@ const EmployeeDetailsCard = (props) => {
             </div>
             <div style={styles.cardItem}>
               <p style={styles.cardItemLabel}>Marital:</p>
-              <p style={styles.cardItemValue}>{props?.employee?.marital ?? ""}</p>
+              <p style={styles.cardItemValue}>
+                {props?.employee?.marital ?? ""}
+              </p>
             </div>
             <div style={styles.cardItem}>
               <p style={styles.cardItemLabel}>Gender:</p>
@@ -151,15 +153,21 @@ const EmployeeDetailsCard = (props) => {
             </div>
             <div style={styles.cardItem}>
               <p style={styles.cardItemLabel}>Father Name:</p>
-              <p style={styles.cardItemValue}>{props?.employee?.father ?? ""}</p>
+              <p style={styles.cardItemValue}>
+                {props?.employee?.father ?? ""}
+              </p>
             </div>
             <div style={styles.cardItem}>
               <p style={styles.cardItemLabel}>Mother Name:</p>
-              <p style={styles.cardItemValue}>{props?.employee?.mother ?? ""}</p>
+              <p style={styles.cardItemValue}>
+                {props?.employee?.mother ?? ""}
+              </p>
             </div>
             <div style={styles.cardItem}>
               <p style={styles.cardItemLabel}>Relationship:</p>
-              <p style={styles.cardItemValue}>{props?.employee?.relationship ?? ""}</p>
+              <p style={styles.cardItemValue}>
+                {props?.employee?.relationship ?? ""}
+              </p>
             </div>
             {props.employee.department && (
               <div style={styles.cardItem}>
@@ -185,11 +193,15 @@ const EmployeeDetailsCard = (props) => {
                 <div style={styles.cardItemTeam} key={childrens.id}>
                   <img
                     style={styles.cardItemImg}
-                    src={data?.photo ?? ""}
+                    src={data?.pictures[0] ?? ""}
                     alt="Profile"
                   />
-                  <p style={styles.cardItemName}>{props?.employee?.firstname ?? ""}</p>
-                  <p style={styles.cardItemRole}>{props?.employee?.occuopation ?? ""}</p>
+                  <p style={styles.cardItemName}>
+                    {props?.employee?.firstname ?? ""}
+                  </p>
+                  <p style={styles.cardItemRole}>
+                    {props?.employee?.occuopation ?? ""}
+                  </p>
                 </div>
               ))}
           </div>
@@ -197,7 +209,9 @@ const EmployeeDetailsCard = (props) => {
       )}
       <div style={styles.cardItem}>
         <p style={styles.cardItemLabel}>Divyang Description:</p>
-        <p style={styles.cardItemValue}>{props?.employee?.divyangdescription ?? ""}</p>
+        <p style={styles.cardItemValue}>
+          {props?.employee?.divyangdescription ?? ""}
+        </p>
       </div>
     </div>
   );
