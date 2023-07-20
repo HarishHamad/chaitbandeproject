@@ -3,8 +3,8 @@ import { Table, Button } from "antd";
 import HCMModaluser from "./HCModalUser";
 
 
-export default function HCMFamily({ userid, children, }) {
- 
+export default function HCMFamily({ userid, children }) {
+ console.log("HCM Family ", children)
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const showModal = () => {
