@@ -18,8 +18,12 @@ import Education from "./Education";
 const UserList = () => {
   const { tableProps, sorter } = useTable({
     initialSorter: [{ field: "id", order: "desc" }],
+    queryfn: ()=> fetchData(1,10),
     meta: {
       populate: ["pictures"],
+    },
+    pagination: {
+      pageSize: 20,
     },
   });
   if (typeof tableProps.dataSource == "object") {
@@ -83,7 +87,7 @@ const UserList = () => {
             sorter={{ multiple: 3 }}
             render={(val, record) => (
               <>
-                {record.pictures !== null &&record.pictures.length>0? (
+                {record.pictures !== null && record.pictures.length > 0 ? (
                   <ImageField
                     value={record?.pictures[0].formats.thumbnail.url}
                     width={50}
@@ -100,7 +104,7 @@ const UserList = () => {
             defaultSortOrder={getDefaultSortOrder("id", sorter)}
             sorter={{ multiple: 2 }}
           />
-            <Table.Column
+          <Table.Column
             dataIndex="mobile"
             key="id"
             title="mobile"
@@ -115,16 +119,6 @@ const UserList = () => {
                 <EditButton size="small" recordItemId={record.id} />
                 <ShowButton size="small" recordItemId={record.id} />
                 <DeleteButton size="small" recordItemId={record.id} />
-                {/* <Button onClick = {()=>{
-                                  console.log("On Click this parentId", record.id)
-                                  setParentId(record.id)
-                                  setIsEducationModalOpen(true)
-                                  }}>Education</Button>
-                                <Button onClick = {()=>{
-                                  console.log("On Click this parentId", record.id)
-                                  setParentId(record.id)
-                                  setIsBusinessModalOpen(true)
-                                  }}>Business</Button> */}
               </Space>
             )}
           />
