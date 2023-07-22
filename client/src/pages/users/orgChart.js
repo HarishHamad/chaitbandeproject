@@ -4,6 +4,7 @@ import { OrgChart } from "d3-org-chart";
 import CustomNodeContent from "./customNodeContent";
 import CustomExpandButton from "./customExpandButton";
 import EmployeeDetailsCard from "./employeeDetailsCard";
+import {useNavigate} from "react-router-dom"
 
 const styles = {
   orgChart: {
@@ -13,6 +14,7 @@ const styles = {
 };
 
 const OrganizationalChart = (props) => {
+  const navigate=useNavigate()
 
   console.log("props OrganizationalChart", props.children)
   const d3Container = useRef(null);
@@ -25,8 +27,10 @@ const OrganizationalChart = (props) => {
   useLayoutEffect(() => {
     const toggleDetailsCard = (nodeId) => {
       // console.log("Node ID ",nodeId)
-      handleShow();
+      // handleShow();
+
       setEmployeeId(nodeId);
+      navigate(`/users/detail/${nodeId}`)
     };
     const chart = new OrgChart();
     if (props.data && d3Container.current) {
@@ -37,6 +41,7 @@ const OrganizationalChart = (props) => {
         .nodeHeight((d) => 150)
         .compactMarginBetween((d) => 80)
         .onNodeClick((d) => {
+          
           toggleDetailsCard(d);
         })
         .buttonContent((node, state) => {
@@ -56,13 +61,13 @@ const OrganizationalChart = (props) => {
 
   return (
     <div style={styles.orgChart} ref={d3Container}>
-      {cardShow && (
+      {/* {cardShow && (
         <EmployeeDetailsCard
           employees={props.data}
           employee={props.data.find((employee) => employee.id === employeeId)}
           handleClose={handleClose}
         />
-      )}
+      )} */}
     </div>
   );
 };

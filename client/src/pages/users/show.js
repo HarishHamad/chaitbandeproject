@@ -6,11 +6,9 @@ import BusinessDetails from "./Business";
 import EducationForm from "./Education";
 import AddressDetails from "./Address";
 
-
-
 const { Title, Text } = Typography;
 
-import {  Card } from "antd";
+import { Card } from "antd";
 
 import PersonalDetails from "./PersonalDetails";
 
@@ -20,56 +18,56 @@ import ProfileShow from "../profiles/show";
 
 const { Meta } = Card;
 
-const UserShow = () => {
+const UserShow = (props) => {
   const { queryResult } = useShow({
     metaData: {
-      populate: ["businesses", "profiles","educations", "pictures", "profiles","addresses", "families","users","users.children","users.pictures","users.children","users.users","users.users.pictures" ],
+      populate: [
+        "children.children",
+        "profiles",
+        "businesses",
+        "educations",
+        "pictures",
+        "addresses",
+        "children",
+        "children.pictures",
+        "children.parents",
+        "children.children",
+        "children.children.pictures",
+      ],
     },
-
-    // Use simpleList and filter 
-    // meta: {
-    //   populate: ["pictures"],
-    // },
   });
- 
-  // console.log("user",users)
+
   const { data, isLoading } = queryResult;
   const record = data?.data;
-  console.log(" UserShow queryResult=> ",record)
-  // console.log("USer show record", record);
-  //  console.log("User Show Data", data);
+  console.log("queryResult in show", record);
+
   let businesslist = record?.businesses;
   let educationlist = record?.educations;
   let addresslist = record?.addresses;
-  let familylist = record?.families;
-  let children = record?.users;
+  let children = record?.children;
   let profilelist= record?.profiles;
-  // console.log("children",children)
-  let modified=[]
+
+  let modified = [];
   modified.push(record);
-  for(const childObj of record?.users ?? []){
-    // console.log("children,",childObj)
-    let childrenObj =  {...childObj, parentId:record?.id}
-    for(const Obj of childObj?.users){
-      // console.log("obj",Obj)
-      let childrenChildObj=  {...Obj, parentId:childObj?.id}
-      modified.push(childrenChildObj)
-
+  for (const childObj of record?.children ?? []) {
+    let childrenObj = { ...childObj, parentId: record?.id };
+    for (const Obj of childObj?.children) {
+      let childrenChildObj = { ...Obj, parentId: childObj?.id };
+      modified.push(childrenChildObj);
     }
-    modified.push(childrenObj)
-
+    modified.push(childrenObj);
   }
-  
-  
-  
- 
-  
+
   useEffect(() => {
     businesslist = record?.businesses ?? [];
     educationlist = record?.educations ?? [];
     addresslist = record?.addresses ?? [];
-    modified = children?children.map((child)=>{return {...child, parentId:record.id}}):[]
-    modified.push(record)
+    modified = children
+      ? children.map((child) => {
+          return { ...child, parentId: record.id };
+        })
+      : [];
+    modified.push(record);
   }, [data]);
 
   if (isLoading) {
@@ -77,10 +75,10 @@ const UserShow = () => {
   }
 
   let imgurl =
-  record?.pictures[0] != null
-      ? `${record?.pictures[0]?.formats?.thumbnail?.url}`
+    record && record.pictures && record.pictures[0]
+      ? `${record.pictures[0]?.formats?.thumbnail?.url}`
       : "https://www.gauchercommunity.org/wp-content/uploads/2020/09/avatar-placeholder-150x150.png";
-  // console.log("imageeurl",imgurl)
+
   const items = [
     {
       key: "1",
@@ -120,33 +118,34 @@ const UserShow = () => {
       key: "6",
       label: `ProfileList`,
       children: (
+        <OrganizationalChart
+          data={modified}
+          children={children}
+          count={(data?.data?.children)?.length}
+        />
+      ),
+    },
+    {
+      key: "7",
+      label: `MeelanProfile`,
+      children: (
         <ProfileShow userid={record?.id} profile={profilelist}/>
       ),
     },
-    // {
-    //   key: "6",
-    //   label: `Family Tree`,
-    //   children: (
-    //     <OrganizationalChart data={modified} children={children} count={(data?.data?.users).length}/>
-    //   ),
-    // },
   ];
 
-  const onChange = (key) => {
-    
-  };
+  const onChange = (key) => {};
 
   if (isLoading) {
     return <h1> Page loading</h1>;
   } else {
-    
     return (
       <Show isLoading={isLoading}>
         <Card
           style={{
             width: 500,
             margin: "auto",
-            background: " white",
+            backgroundColor: "#fafafa",
             position: "relative",
             display: " flex",
             alignItems: "flex-end",
@@ -196,8 +195,6 @@ const UserShow = () => {
       </Show>
     );
   }
-
-
 };
 
 export default UserShow;

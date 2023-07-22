@@ -5,12 +5,7 @@ import { useCreate, useShow } from "@refinedev/core";
 const BusinessDetails = ({ userid, businesslist }) => {
   
   console.log("business list component ", businesslist)
-  // const { queryResult } = useShow({
-  //   resource: "businesses",
-  //   userid: userid,
-  //   metaData: { populate: ["members", "addresses"] },
-  // });
-  // const { data: businessData, isLoading } = queryResult;
+ 
   const [data, setData] = useState(
     businesslist?.map((item) => ({ ...item, key: item.id, isOld: true })) ?? []
   );
@@ -31,18 +26,7 @@ const BusinessDetails = ({ userid, businesslist }) => {
   });
 
   const columns = [
-    // {
-    //   title: "ID",
-    //   dataIndex: "id",
-    //   key: "id",
-    //   editable: true,
-    //   render: (_, record) => (
-    //     <Input
-    //       value={record.id}
-    //       onChange={(e) => handleInputChange(e, record.key, "id")}
-    //     />
-    //   ),
-    // },
+   
     {
       title: "Owner Name",
       dataIndex: "ownername",
