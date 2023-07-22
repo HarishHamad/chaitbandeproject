@@ -18,16 +18,12 @@ import Education from "./Education";
 const UserList = () => {
   const { tableProps, sorter } = useTable({
     initialSorter: [{ field: "id", order: "desc" }],
-    queryfn: ()=> fetchData(1,10),
     meta: {
-      populate: ["pictures"],
-    },
-    pagination: {
-      pageSize: 20,
+      populate: ["photo"],
     },
   });
   if (typeof tableProps.dataSource == "object") {
-    console.log("user tableProps", tableProps);
+    console.log("user tableProps", tableProps.dataSource[0]?.photo?.url);
   }
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBusinessModalOpen, setIsBusinessModalOpen] = useState(false);
@@ -87,9 +83,9 @@ const UserList = () => {
             sorter={{ multiple: 3 }}
             render={(val, record) => (
               <>
-                {record.pictures !== null && record.pictures.length > 0 ? (
+                {record.photo !== null ? (
                   <ImageField
-                    value={record?.pictures[0].formats.thumbnail.url}
+                    value={record.photo.formats.thumbnail.url}
                     width={50}
                     height={50}
                   />
@@ -98,16 +94,9 @@ const UserList = () => {
             )}
           />
           <Table.Column
-            dataIndex="firstname"
+            dataIndex="id"
             key="id"
             title="Name"
-            defaultSortOrder={getDefaultSortOrder("id", sorter)}
-            sorter={{ multiple: 2 }}
-          />
-          <Table.Column
-            dataIndex="mobile"
-            key="id"
-            title="mobile"
             defaultSortOrder={getDefaultSortOrder("id", sorter)}
             sorter={{ multiple: 2 }}
           />
@@ -119,6 +108,16 @@ const UserList = () => {
                 <EditButton size="small" recordItemId={record.id} />
                 <ShowButton size="small" recordItemId={record.id} />
                 <DeleteButton size="small" recordItemId={record.id} />
+                {/* <Button onClick = {()=>{
+                                  console.log("On Click this parentId", record.id)
+                                  setParentId(record.id)
+                                  setIsEducationModalOpen(true)
+                                  }}>Education</Button>
+                                <Button onClick = {()=>{
+                                  console.log("On Click this parentId", record.id)
+                                  setParentId(record.id)
+                                  setIsBusinessModalOpen(true)
+                                  }}>Business</Button> */}
               </Space>
             )}
           />

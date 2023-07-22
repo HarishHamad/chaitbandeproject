@@ -1,0 +1,48 @@
+diff --git a/node_modules/@strapi/admin/admin/src/pages/HomePage/HomeHeader.js b/node_modules/@strapi/admin/admin/src/pages/HomePage/HomeHeader.js
+index 1ec96b4..cf9a12d 100644
+--- a/node_modules/@strapi/admin/admin/src/pages/HomePage/HomeHeader.js
++++ b/node_modules/@strapi/admin/admin/src/pages/HomePage/HomeHeader.js
+@@ -42,12 +42,16 @@ const HomeHeader = ({ hasCreatedContentType, onCreateCT }) => {
+                 })}
+           </WordWrap>
+           {hasCreatedContentType ? (
+-            <Link isExternal href="https://strapi.io/blog">
+-              {formatMessage({
+-                id: 'app.components.HomePage.button.blog',
+-                defaultMessage: 'See more on the blog',
+-              })}
+-            </Link>
++            // <Link isExternal href="https://strapi.io/blog">
++            //   {formatMessage({
++            //     id: 'app.components.HomePage.button.blog',
++            //     defaultMessage: 'See more on the blog',
++            //   })}
++            // </Link>
++            formatMessage({
++              id:  'app.components.HomePage.button.blog' ,
++              defaultMessage:'See more on the blog',
++            })
+           ) : (
+             <Button size="L" onClick={onCreateCT} endIcon={<ArrowRight />}>
+               {formatMessage({
+diff --git a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
+index 72836a4..3fe7784 100644
+--- a/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
++++ b/node_modules/@strapi/admin/admin/src/pages/HomePage/index.js
+@@ -75,14 +75,14 @@ const HomePage = () => {
+               />
+             </GridItem>
+           </Grid>
+-          <Grid gap={6}>
++          {/* <Grid gap={6}>
+             <GridItem col={8} s={12}>
+               {showGuidedTour ? <GuidedTourHomepage /> : <ContentBlocks />}
+             </GridItem>
+             <GridItem col={4} s={12}>
+               <SocialLinks />
+             </GridItem>
+-          </Grid>
++          </Grid> */}
+         </Box>
+       </Main>
+     </Layout>
