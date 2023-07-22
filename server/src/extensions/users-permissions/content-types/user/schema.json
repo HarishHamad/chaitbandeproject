@@ -210,6 +210,18 @@
       ],
       "type": "media",
       "multiple": true
+    },
+    "candidates": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::profile.profile",
+      "mappedBy": "meelan"
+    },
+    "profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::profile.profile",
+      "mappedBy": "userid"
     }
   }
 }

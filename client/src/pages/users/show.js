@@ -16,13 +16,14 @@ import PersonalDetails from "./PersonalDetails";
 
 import OrganizationalChart from "./orgChart";
 import HCMFamily from "./HCMFamily";
+import ProfileShow from "../profiles/show";
 
 const { Meta } = Card;
 
 const UserShow = () => {
   const { queryResult } = useShow({
     metaData: {
-      populate: ["businesses", "educations", "pictures", "addresses", "families","users","users.pictures","users.children","users.users","users.users.pictures" ],
+      populate: ["businesses", "profiles","educations", "pictures", "profiles","addresses", "families","users","users.children","users.pictures","users.children","users.users","users.users.pictures" ],
     },
 
     // Use simpleList and filter 
@@ -30,11 +31,11 @@ const UserShow = () => {
     //   populate: ["pictures"],
     // },
   });
-  console.log("queryResult",queryResult)
+ 
   // console.log("user",users)
   const { data, isLoading } = queryResult;
   const record = data?.data;
- 
+  console.log(" UserShow queryResult=> ",record)
   // console.log("USer show record", record);
   //  console.log("User Show Data", data);
   let businesslist = record?.businesses;
@@ -42,6 +43,7 @@ const UserShow = () => {
   let addresslist = record?.addresses;
   let familylist = record?.families;
   let children = record?.users;
+  let profilelist= record?.profiles;
   // console.log("children",children)
   let modified=[]
   modified.push(record);
@@ -116,11 +118,18 @@ const UserShow = () => {
     },
     {
       key: "6",
-      label: `Family Tree`,
+      label: `ProfileList`,
       children: (
-        <OrganizationalChart data={modified} children={children} count={(data?.data?.users).length}/>
+        <ProfileShow userid={record?.id} profile={profilelist}/>
       ),
     },
+    // {
+    //   key: "6",
+    //   label: `Family Tree`,
+    //   children: (
+    //     <OrganizationalChart data={modified} children={children} count={(data?.data?.users).length}/>
+    //   ),
+    // },
   ];
 
   const onChange = (key) => {

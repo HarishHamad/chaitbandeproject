@@ -18,6 +18,8 @@ import Education from "./Education";
 const UserList = () => {
   const { tableProps, sorter } = useTable({
     initialSorter: [{ field: "id", order: "desc" }],
+    queryFn: () => fetchData(1, 10), // Fetches the first page with 10 items.
+
     meta: {
       populate: ["pictures"],
     },
