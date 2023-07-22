@@ -3,14 +3,12 @@ import { useList } from '@refinedev/core';
 import { Input, Space, Switch } from 'antd';
 import { Transfer } from 'antd';
 
-const Profiles = ({ userid }) => {
+const CreateProfile = ({ userid }) => {
   console.log("Profiles", userid);
   const [mobilenum, setMobilenum] = useState('');
   const [email, setEmail] = useState('');
   const { data, isLoading, isError } = useList({
     resource: 'users',
-    queryFn: () => fetchData(1, 10), // Fetches the first page with 10 items.
-
   });
 
   console.log("data", data)
@@ -185,4 +183,4 @@ console.log("filteredData",filteredData)
   );
 };
 
-export default Profiles;
+export default CreateProfile;

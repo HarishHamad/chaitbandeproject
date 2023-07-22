@@ -41,6 +41,7 @@ import UserCreate from "./pages/users/create";
 import UserEdit from "./pages/users/edit";
 import UserShow from "./pages/users/show";
 import DetailsCard from "./pages/users/DetailsCard";
+import ProfileShow from "./pages/profiles/show";
 
 
 const ABLY_API_KEY = process.env.REACT_APP_ABLY_API_KEY;
@@ -238,7 +239,9 @@ const App = () => {
                             <Route path="show/:id" element={<DashboardShow />} />
                             <Route path="edit/:id" element={<DashboardEdit />} />
                         </Route>
-                        
+                        <Route path="/profiles">   
+                            <Route path="show/:userid" element={<ProfileShow />} />
+                        </Route>
                         <Route path="/users">
                             <Route index element={<UserList />} />
                             <Route path="create" element={<UserCreate />} />
