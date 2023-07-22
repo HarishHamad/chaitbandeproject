@@ -75,18 +75,10 @@ const styles = {
   },
 };
 
-
 const CustomNodeContent = (props) => {
- 
-                   
-  console.log(
-    "CustomNodeContent ",
-    props,
-   
-  );
+  console.log("CustomNodeContent ", props);
   return (
     <>
-    
       <div style={styles.nodeContainer}>
         <div style={styles.nodeDetails}>
           {props?.data?.email === "" ? (
@@ -113,10 +105,14 @@ const CustomNodeContent = (props) => {
                   </div>
                 </Col>
                 <Col>
-
                   <img
                     style={styles.nodeImg}
-                    src={props?.data?.pictures[0]?.formats?.thumbnail?.url ?? ""}
+                    src={
+                      props?.data?.pictures &&
+                      props.data.pictures[0]?.formats?.thumbnail?.url
+                        ? props.data.pictures[0].formats.thumbnail.url
+                        : "https://www.gauchercommunity.org/wp-content/uploads/2020/09/avatar-placeholder-150x150.png"
+                    }
                     alt="Profile"
                   />
                 </Col>
