@@ -205,11 +205,12 @@
       "type": "json"
     },
     "pictures": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
       "allowedTypes": [
         "images"
-      ],
-      "type": "media",
-      "multiple": true
+      ]
     },
     "candidates": {
       "type": "relation",
@@ -222,6 +223,63 @@
       "relation": "oneToOne",
       "target": "api::profile.profile",
       "mappedBy": "userid"
+    },
+    "tempid": {
+      "type": "integer"
+    },
+    "samaj": {
+      "type": "string"
+    },
+    "height": {
+      "type": "string"
+    },
+    "createdfor": {
+      "type": "string"
+    },
+    "highestdegree": {
+      "type": "string"
+    },
+    "income": {
+      "type": "string"
+    },
+    "myaddress": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "state": {
+      "type": "string"
+    },
+    "companyname": {
+      "type": "string"
+    },
+    "profilerole": {
+      "type": "string"
+    },
+    "district": {
+      "type": "string"
+    },
+    "postalcode": {
+      "type": "integer"
+    },
+    "fathermobile": {
+      "type": "string"
+    },
+    "additionalqualification": {
+      "type": "richtext"
+    },
+    "lastcollege": {
+      "type": "string"
+    },
+    "workingcity": {
+      "type": "string"
+    },
+    "designation": {
+      "type": "string"
     }
   }
 }
