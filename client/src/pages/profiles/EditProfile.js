@@ -55,8 +55,8 @@ const EditProfileDialog = ({ parentId, isEditModalOpen, setIsEditModalOpen, prof
         // Set the initial form values based on profileData
         if (profileData) {
             const initialFormValues = {
-                plan: profileData.attributes.plan,
-                paymentmod: profileData.attributes.paymentmod,
+                plan: profileData?.attributes?.plan??"",
+                paymentmod: profileData?.attributes?.paymentmod??"",
                 // Add other fields here based on your data structure
             };
             formProps.form.setFieldsValue(initialFormValues);

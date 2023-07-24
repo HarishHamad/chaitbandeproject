@@ -16,32 +16,32 @@ const ProfileDataView = ({ profileData }) => {
     console.log("profileData", profileData.attributes)
     return <Row gutter={25}>
         <Row span={24}>
-            <Col span={24}>
+            {/* <Col span={24}>
                 <Card.Grid style={gridStyle}><b>Payment Status: </b>{profileData.attributes.paymentstatus}</Card.Grid>
-            </Col >
+            </Col > */}
             <Col span={24}>
-                <Card.Grid style={gridStyle}><b>Payment Mod: </b>{profileData.attributes.paymentmod}</Card.Grid>
+                <Card.Grid style={gridStyle}><b>Payment Mod: </b>{profileData?.attributes?.paymentmod??""}</Card.Grid>
             </Col>
 
 
         </Row>
         <Row span={24}>
             <Col span={24}>
-                <Card.Grid style={gridStyle}><b>Plan: </b>{profileData.attributes.plan}</Card.Grid>
+                <Card.Grid style={gridStyle}><b>Plan: </b>{profileData?.attributes?.plan??""}</Card.Grid>
             </Col>
             <Col span={24}>
-                <Card.Grid style={gridStyle}><b>Status: </b>{profileData.attributes.status}</Card.Grid>
+                <Card.Grid style={gridStyle}><b>Status: </b>{profileData?.attributes?.status??""}</Card.Grid>
 
 
             </Col>
         </Row>
         <Row span={24}>
             <Col span={24}>
-                <Card.Grid style={gridStyle}><b>Description: </b>              <MDEditor.Markdown source={profileData.attributes.description} />
+                <Card.Grid style={gridStyle}><b>Description: </b><MDEditor.Markdown source={profileData?.attributes?.description??""} />
                 </Card.Grid>
             </Col>
             <Col span={24}>
-                <Card.Grid style={gridStyle}><b>Requirement: </b>{profileData.attributes.status}</Card.Grid>
+                <Card.Grid style={gridStyle}><b>Requirement: </b>{profileData?.attributes?.status??""}</Card.Grid>
 
 
             </Col>

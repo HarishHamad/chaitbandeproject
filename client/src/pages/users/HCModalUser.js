@@ -60,8 +60,8 @@ const HCMModaluser = ({ parent_id, isModalOpen, setIsModalOpen }) => {
   const { formProps, getInputProps, saveButtonProps } = useForm();
 
   const handleFormFinish = (values) => {
-    values = { ...values, role: 2, parentid: parent_id };
-    // remain["parents"] = userid;
+  values = { ...values, role: 2};
+    values["parents"] = parent_id;
     // values={...values, classes:selectedClassId,subject:selectedSubjectId,topics:selectedTopicId}
 
     formProps.onFinish?.(mediaUploadMapper(values));
@@ -290,7 +290,7 @@ const HCMModaluser = ({ parent_id, isModalOpen, setIsModalOpen }) => {
                 </Col>
 
                 <Col span={8}>
-                  <Form.Item label="Category" name="occupation">
+                  <Form.Item label="Category" name="cast">
                     <Select placeholder="Select Category">
                       <Option value="general">General</Option>
                       <Option value="obc">OBC</Option>

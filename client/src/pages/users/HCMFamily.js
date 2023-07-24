@@ -77,8 +77,8 @@ export default function HCMFamily({ userid, children }) {
     },
     {
       title: "Category",
-      dataIndex: "occupation",
-      key: "occupation",
+      dataIndex: "cast",
+      key: "cast",
     },
     {
       title: "Divyang Description",
@@ -101,7 +101,7 @@ export default function HCMFamily({ userid, children }) {
       sex: children[i].sex,
       dob: children[i].dob,
       divyangdescription: children[i].divyangdescription,
-      occupation: children[i].occupation,
+      cast: children[i].cast,
       relationship: children[i].relationship,
       gotra: children[i].gotra,
       jati: children[i].jati,

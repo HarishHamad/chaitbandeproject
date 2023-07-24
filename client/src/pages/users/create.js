@@ -37,7 +37,7 @@ const UserCreate = () => {
   const { formProps, getInputProps, saveButtonProps } = useForm();
   const handleFormFinish = (values) => {
     values = { ...values, role: 2 };
- 
+    console.log("values", values);
     // values={...values, classes:selectedClassId,subject:selectedSubjectId,topics:selectedTopicId}
 
     formProps.onFinish?.(mediaUploadMapper(values));
@@ -94,7 +94,7 @@ const UserCreate = () => {
                 }}
                 accept="image/*"
                 listType="picture-card"
-                fileList={fileList} 
+                fileList={fileList}
                 onChange={onChange}
                 onPreview={onPreview}
               >
@@ -214,7 +214,7 @@ const UserCreate = () => {
 
           <Row gutter={24}>
             <Col span={8}>
-              <Form.Item label="Category" name="occupation">
+              <Form.Item label="Category" name="cast">
                 <Select placeholder="Select Category">
                   <Option value="general">General</Option>
                   <Option value="obc">OBC</Option>
@@ -247,7 +247,7 @@ const UserCreate = () => {
                   <Option value="married">Married</Option>
                   <Option value="unmarried">Unmarried</Option>
                   <Option value="divorced">Divorced</Option>
-                  <Option value="divorced">Waiting ForDivorced</Option>
+                  <Option value="waitingdivorced">Waiting ForDivorced</Option>
                 </Select>
               </Form.Item>
             </Col>

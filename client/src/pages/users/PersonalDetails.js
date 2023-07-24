@@ -176,7 +176,7 @@ const PersonalDetails = () => {
                   <div style={style.cardItem}>
                     <p style={style.cardItemLabel}>Category:</p>
                     <p style={style.cardItemValue}>
-                      {data?.data?.occupation ?? ""}
+                      {data?.data?.cast ?? ""}
                     </p>
                   </div>
                   <div style={style.cardItem}>
@@ -206,6 +206,7 @@ const PersonalDetails = () => {
                   <p style={style.cardItemLabel}>Gotra:</p>
                   <p style={style.cardItemValue}>{data?.data?.gotra ?? ""}</p>
                 </div>
+         
                 <div style={style.cardItem}>
                   <p style={style.cardItemLabel}>Father Name:</p>
                   <p style={style.cardItemValue}>{data?.data?.father ?? ""}</p>
@@ -214,6 +215,7 @@ const PersonalDetails = () => {
                   <p style={style.cardItemLabel}>Mother Name:</p>
                   <p style={style.cardItemValue}>{data?.data?.mother ?? ""}</p>
                 </div>
+
                 <div style={style.cardItem}>
                   <p style={style.cardItemLabel}>Relationship:</p>
                   <p style={style.cardItemValue}>
@@ -238,4 +240,3 @@ const PersonalDetails = () => {
 };
 
 export default PersonalDetails;
-
