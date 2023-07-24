@@ -1,7 +1,0 @@
-.truncated-text {
-    max-width: 200px; /* Adjust the max-width as per your requirements */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-  
