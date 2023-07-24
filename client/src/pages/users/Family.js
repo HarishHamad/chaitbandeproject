@@ -21,7 +21,7 @@ const FamilyDetails = ({ mobile, userid, familylist }) => {
     email: "",
     relation: "",
     mobile: "",
-    occupation: "",
+    cast: "",
     relationship: "",
   });
 
@@ -78,15 +78,15 @@ const FamilyDetails = ({ mobile, userid, familylist }) => {
     },
 
     {
-      title: "Occupation",
-      dataIndex: "occupation",
-      key: "occupation",
+      title: "cast",
+      dataIndex: "cast",
+      key: "cast",
       editable: true,
       render: (_, record) => (
         <Input
-          value={record.occupation}
+          value={record.cast}
           onChange={(value) =>
-            handleInputChange(value, record.key, "occupation")
+            handleInputChange(value, record.key, "cast")
           }
         />
       ),
@@ -109,14 +109,14 @@ const FamilyDetails = ({ mobile, userid, familylist }) => {
       name: newFamily.name,
       relation: newFamily.relation,
       age: newFamily.age,
-      occupation: newFamily.occupation,
+      cast: newFamily.cast,
     };
     setData([...data, newData]);
     setNewFamily({
       name: "",
       relation: "",
       age: "",
-      occupation: "",
+      cast: "",
     });
   };
 

@@ -8,25 +8,69 @@ import AddressDetails from './Address';
 import Family from './Family';
 import { image, reducer } from '@uiw/react-md-editor';
 const { Title, Text } = Typography;
-import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { Avatar, Card } from 'antd';
-import Personal from './Personal';
-import PersonalDetails from './PersonalDetails';;
+
+import { Card } from "antd";
+
+import PersonalDetails from "./PersonalDetails";
+
+import OrganizationalChart from "./orgChart";
+import HCMFamily from "./HCMFamily";
+import ProfileShow from "../profiles/show";
+
 const { Meta } = Card;
 
-const UserShow = () => {
+const UserShow = (props) => {
+  const { queryResult } = useShow({
+    metaData: {
+      populate: [
+        "children.children",
+        "profiles",
+        "businesses",
+        "educations",
+        "pictures",
+        "addresses",
+        "children",
+        "children.pictures",
+        "children.parents",
+        "children.children",
+        "children.children.pictures",
+      ],
+    },
+  });
 
-  const { queryResult } = useShow({ metaData: { populate: ["businesses", "educations", "photo", "addresses"] } });
   const { data, isLoading } = queryResult;
   const record = data?.data;
-  console.log("USer show record", record)
-  // console.log("User Show Data", data);
-  let businesslist =  record?.businesses 
-  let educationlist = record?.educations
-  useEffect(()=>{
-    businesslist = record?.businesses ?? []
-    educationlist = record?.educations ?? []
-  },[data])
+  console.log("queryResult in show", record);
+
+  let businesslist = record?.businesses;
+  let educationlist = record?.educations;
+  let addresslist = record?.addresses;
+  let children = record?.children;
+  let profilelist= record?.profiles;
+
+  let modified = [];
+  modified.push(record);
+  for (const childObj of record?.children ?? []) {
+    let childrenObj = { ...childObj, parentId: record?.id };
+    for (const Obj of childObj?.children) {
+      let childrenChildObj = { ...Obj, parentId: childObj?.id };
+      modified.push(childrenChildObj);
+    }
+    modified.push(childrenObj);
+  }
+
+  useEffect(() => {
+    businesslist = record?.businesses ?? [];
+    educationlist = record?.educations ?? [];
+    addresslist = record?.addresses ?? [];
+    profilelist= record?.profiles ??[];
+    modified = children
+      ? children.map((child) => {
+          return { ...child, parentId: record.id };
+        })
+      : [];
+    modified.push(record);
+  }, [data]);
 
   if (isLoading) {
     return <h1>Still loading </h1>
@@ -34,8 +78,11 @@ const UserShow = () => {
   
   
 
-  let imgurl = record?.photo != null ? `${record?.photo?.formats?.thumbnail?.url}` : "https://www.gauchercommunity.org/wp-content/uploads/2020/09/avatar-placeholder-150x150.png"
-  // console.log("imageeurl",imgurl)
+  let imgurl =
+    record && record.pictures && record.pictures[0]
+      ? `${record.pictures[0]?.formats?.thumbnail?.url}`
+      : "https://www.gauchercommunity.org/wp-content/uploads/2020/09/avatar-placeholder-150x150.png";
+
   const items = [
 
     {
@@ -57,14 +104,34 @@ const UserShow = () => {
     },
 
     {
-      key: '4',
-      label: `Family`,
-      children: <Family userid={record?.id} />,
+      key: "4",
+      label: `families`,
+      children: <HCMFamily userid={record?.id} children={children} />,
     },
     {
       key: '5',
       label: `Addresses`,
-      children: <AddressDetails userid={record?.id} />,
+      children: (
+        <AddressDetails userid={record?.id} addresslist={addresslist} />
+      ),
+    },
+    {
+      key: "6",
+      label: `ProfileList`,
+      children: (
+        <OrganizationalChart
+          data={modified}
+          children={children}
+          count={(data?.data?.children)?.length}
+        />
+      ),
+    },
+    {
+      key: "7",
+      label: `MeelanProfile`,
+      children: (
+        <ProfileShow userid={record?.id} profileData={profilelist}/>
+      ),
     },
   ];
 
@@ -132,57 +199,6 @@ if(isLoading){
     </Show> 
 }
 
-  // return (<>
-
-
-
-  //   <Show isLoading={isLoading}>
-
-
-  //     <Card
-  //       style={{
-  //         width: 500,
-  //         margin: "auto",
-
-  //       }}
-  //     >
-  //       <div style={{
-  //         display: "flex",
-  //         flexDirection: "row"
-  //       }}>
-
-  //         <img style={{
-  //           borderRadius: '100%',
-  //           display: 'inline',
-  //         }}
-  //           alt="example"
-  //           src={imgurl}
-  //         />
-
-  //         <div style={{
-
-  //           // display: 'flex',
-  //           alignItems: 'center',
-  //           alignContent: 'center',
-  //           marginLeft: '60px'
-
-  //         }}>
-
-  //           <p>Name : <b>{record.firstname}  {record.lastname}</b></p>
-  //           {/* {console.log(record)} */}
-  //           <p>Caste: {record.cast}</p>
-  //           <p>DOB : {record.dob} </p>
-  //           <p>Marital : {record.marital} </p>
-  //         </div>
-  //       </div>
-
-  //     </Card>
-
-
-  //     {/* <Collapse items={items} defaultActiveKey={['1']} onChange={onChange} /> */}
-  //     <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-  //   </Show>
-  // </>
   
 };
 

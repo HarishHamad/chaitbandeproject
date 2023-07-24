@@ -126,7 +126,7 @@ const EmployeeDetailsCard = (props) => {
             <div style={styles.cardItem}>
               <p style={styles.cardItemLabel}>Category:</p>
               <p style={styles.cardItemValue}>
-                {props?.employee?.occupation ?? ""}
+                {props?.employee?.cast ?? ""}
               </p>
             </div>
             <div style={styles.cardItem}>

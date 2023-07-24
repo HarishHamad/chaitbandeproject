@@ -101,7 +101,7 @@ const CustomNodeContent = (props) => {
                   <div style={styles.nodeTeamName}>
                     {props?.data?.firstname ?? ""}
                     <br />
-                    {props?.data?.occupation ?? ""}
+                    {props?.data?.cast ?? ""}
                   </div>
                 </Col>
                 <Col>

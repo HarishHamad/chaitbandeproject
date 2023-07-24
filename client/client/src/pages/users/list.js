@@ -69,7 +69,7 @@ const UserList = () => {
         <Table
           {...tableProps}
           rowKey="id"
-          pagination={{ ...tableProps.pagination, showSizeChanger: true }}
+        
         >
           <Table.Column
             dataIndex="id"

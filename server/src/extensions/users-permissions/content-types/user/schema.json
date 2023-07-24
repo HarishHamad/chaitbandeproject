@@ -75,16 +75,153 @@
         "PARENT"
       ]
     },
-    
     "photo": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
+      ]
+    },
+    "parentid": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "users"
+    },
+    "users": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::users-permissions.user",
+      "mappedBy": "parentid"
+    },
+    "addresses": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::address.address",
+      "mappedBy": "users_permissions_users"
+    },
+    "dob": {
+      "type": "date"
+    },
+    "father": {
+      "type": "string"
+    },
+    "mother": {
+      "type": "string"
+    },
+    "husband": {
+      "type": "string"
+    },
+    "marital": {
+      "type": "string"
+    },
+    "occupation": {
+      "type": "string"
+    },
+    "gotra": {
+      "type": "string"
+    },
+    "sex": {
+      "type": "string"
+    },
+    "relationships": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::relationship.relationship",
+      "mappedBy": "parentids"
+    },
+    "firstname": {
+      "type": "string"
+    },
+    "lastname": {
+      "type": "string"
+    },
+    "businesses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::business.business",
+      "mappedBy": "userid"
+    },
+    "educations": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::education.education",
+      "mappedBy": "userid"
+    },
+    "jati": {
+      "type": "string"
+    },
+    "cast": {
+      "type": "string"
+    },
+    "mobile": {
+      "type": "string"
+    },
+    "isdivyang": {
+      "type": "boolean",
+      "default": false
+    },
+    "divyangdescription": {
+      "type": "richtext"
+    },
+    "relationship": {
+      "type": "string"
+    },
+    "parents": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "children"
+    },
+    "children": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "parents"
+    },
+    "families": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::family.family",
+      "inversedBy": "users_permissions_users"
+    },
+    "ISActiveProfile": {
+      "type": "boolean"
+    },
+    "language": {
+      "type": "string"
+    },
+    "bio": {
+      "type": "richtext"
+    },
+    "companyName": {
+      "type": "string"
+    },
+    "privacy": {
+      "type": "json"
+    },
+    "pictures": {
+      "allowedTypes": [
+        "images"
       ],
       "type": "media",
-      "multiple": false
+      "multiple": true
+    },
+    "candidates": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::profile.profile",
+      "mappedBy": "meelan"
+    },
+    "profile": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::profile.profile",
+      "mappedBy": "userid"
     }
   }
 }

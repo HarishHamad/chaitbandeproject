@@ -214,8 +214,8 @@ const UserCreate = () => {
 
           <Row gutter={24}>
             <Col span={8}>
-              <Form.Item label="Caste" name="occupation">
-                <Select placeholder="Select Cast">
+              <Form.Item label="Category" name="cast">
+                <Select placeholder="Select Category">
                   <Option value="general">General</Option>
                   <Option value="obc">OBC</Option>
                   <Option value="sc/st">SC/ST</Option>
@@ -247,7 +247,7 @@ const UserCreate = () => {
                   <Option value="married">Married</Option>
                   <Option value="unmarried">Unmarried</Option>
                   <Option value="divorced">Divorced</Option>
-                  <Option value="divorced">Waiting ForDivorced</Option>
+                  <Option value="waitingdivorced">Waiting ForDivorced</Option>
                 </Select>
               </Form.Item>
             </Col>

@@ -1,31 +1,15 @@
 version: '3'
 services:
-  strapi:
-    image: harishdell/server:0.0.0.4
-    #image: hcmuleva/dikshaserver:0.0.0.1
+  
+
+  postgres:
+    image: postgres
     environment:
-      NODE_ENV: development
-      DATABASE_CLIENT: postgres
-      DATABASE_NAME: hph
-      DATABASE_HOST: localhost
-      DATABASE_PORT: 5432
-      DATABASE_USERNAME: strapi
-      DATABASE_PASSWORD: strapi
-    volumes:
-      - ./techserver:/srv/app
+      POSTGRES_DB: emeelan
+      POSTGRES_USER: strapi
+      POSTGRES_PASSWORD: strapi
     ports:
-      - '1337:1337'
-    # depends_on:
-    #   - postgres
+      - "5434:5432"
 
-  # postgres:
-  #   image: postgres
-  #   environment:
-  #     POSTGRES_DB: strapi
-  #     POSTGRES_USER: strapi
-  #     POSTGRES_PASSWORD: strapi
-  #   ports:
-  #     - "5532:5432"
-
-  #   volumes:
-  #     - ./techserverdata:/var/lib/postgresql/data
+    volumes:
+      - ./techserverdata:/var/lib/postgresql/data
