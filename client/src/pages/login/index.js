@@ -11,7 +11,7 @@ import {
     Button,
     Checkbox,
 } from "antd";
-import "../../assets/css/login.css";
+// import "../../assets/css/login.css";
 
 const { Text, Title } = Typography;
 

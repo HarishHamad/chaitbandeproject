@@ -1,308 +1,89 @@
-import React, { useState } from "react";
-import { Table, Input, Button } from "antd";
-import { useCreate } from "@refinedev/core";
+import React, { useState } from 'react';
+import { Form, Input, Button, Select, Row, Col } from 'antd';
 
-const AddressDetails = ({userid}) => {
-  const [data, setData] = useState([]);
-  const { mutate } = useCreate();
+const { Option } = Select;
 
-  const [editingKey, setEditingKey] = useState("");
-  const [newAddress, setNewAddress] = useState({
-    addresstype: "",
-    housename: "",
-    landmark: "",
-    village: "",
-    tehsil: "",
-    district: "",
-    state: "",
-    pincode: "",
-  });
-
-  const columns = [
-    {
-      title: "Address Type",
-      dataIndex: "addresstype",
-      key: "addresstype",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.addresstype}
-          onChange={(e) => handleInputChange(e, record.key, "addresstype")}
-        />
-      ),
-    },
-    {
-      title: "House Name",
-      dataIndex: "housename",
-      key: "housename",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.housename}
-          onChange={(e) => handleInputChange(e, record.key, "housename")}
-        />
-      ),
-    },
-    {
-      title: "Landmark",
-      dataIndex: "landmark",
-      key: "landmark",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.landmark}
-          onChange={(e) => handleInputChange(e, record.key, "landmark")}
-        />
-      ),
-    },
-    {
-      title: "Village",
-      dataIndex: "village",
-      key: "village",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.village}
-          onChange={(e) => handleInputChange(e, record.key, "village")}
-        />
-      ),
-    },
-    {
-      title: "Tehsil",
-      dataIndex: "tehsil",
-      key: "tehsil",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.tehsil}
-          onChange={(e) => handleInputChange(e, record.key, "tehsil")}
-        />
-      ),
-    },
-    {
-      title: "District",
-      dataIndex: "district",
-      key: "district",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.district}
-          onChange={(e) => handleInputChange(e, record.key, "district")}
-        />
-      ),
-    },
-    {
-      title: "State",
-      dataIndex: "state",
-      key: "state",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.state}
-          onChange={(e) => handleInputChange(e, record.key, "state")}
-        />
-      ),
-    },
-    {
-      title: "Pincode",
-      dataIndex: "pincode",
-      key: "pincode",
-      editable: true,
-      render: (_, record) => (
-        <Input
-          value={record.pincode}
-          onChange={(e) => handleInputChange(e, record.key, "pincode")}
-        />
-      ),
-    },
-    {
-      title: "Actions",
-      dataIndex: "actions",
-      key: "actions",
-      render: (_, record) => (
-        <span>
-          {editingKey === record.key ? (
-            <>
-              <Button type="primary" onClick={() => save(record.key)}>
-                Save
-              </Button>
-              <Button onClick={cancel}>Cancel</Button>
-            </>
-          ) : (
-            <>
-              <Button onClick={() => edit(record.key)}>Edit</Button>
-              <Button onClick={() => remove(record.key)}>Remove</Button>
-            </>
-          )}
-        </span>
-      ),
-    },
-  ];
-
-  const handleInputChange = (e, key, field) => {
-    const { value } = e.target;
-    const updatedData = [...data];
-    const target = updatedData.find((item) => item.key === key);
-    if (target) {
-      target[field] = value;
-      setData(updatedData);
-    }
-  };
-
-  const handleAdd = () => {
-    const newData = {
-      key: `${data.length + 1}`,
-      addresstype: newAddress.addresstype,
-      housename: newAddress.housename,
-      landmark: newAddress.landmark,
-      village: newAddress.village,
-      tehsil: newAddress.tehsil,
-      district: newAddress.district,
-      state: newAddress.state,
-      pincode: newAddress.pincode,
-    };
-    setData([...data, newData]);
-    setNewAddress({
-      addresstype: "",
-      housename: "",
-      landmark: "",
-      village: "",
-      tehsil: "",
-      district: "",
-      state: "",
-      pincode: "",
-    });
-  };
-
-  const handleRemove = (key) => {
-    const updatedData = data.filter((item) => item.key !== key);
-    setData(updatedData);
-  };
-
-  const handleSave = (key) => {
-    setEditingKey("");
-  };
-
-  const handleCancel = () => {
-    setEditingKey("");
-  };
-
-  const isEditing = (record) => record.key === editingKey;
-
-  const components = {
-    body: {
-      cell: EditableCell,
-    },
-  };
-
-  const columnsWithEditability = columns.map((col) => {
-    if (!col.editable) {
-      return col;
-    }
-
-    return {
-      ...col,
-      onCell: (record) => ({
-        record,
-        dataIndex: col.dataIndex,
-        title: col.title,
-        editing: isEditing(record),
-      }),
-    };
-  });
-
-  const edit = (key) => {
-    setEditingKey(key);
-  };
-
-  const remove = (key) => {
-    handleRemove(key);
-  };
-
-  const save = (key) => {
-    handleSave(key);
-  };
-
-  const cancel = () => {
-    handleCancel();
+const AddressForm = ({setAddressObject}) => {
+  const [form] = Form.useForm();
+  
+  const onFinish = (values) => {
+   setAddressObject(values)
+    // You can handle form submission here, e.g., sending data to a server
   };
 
   return (
-    <div>
-      <div>
-        <Button onClick={handleAdd} type="primary" style={{ marginBottom: 16 }}>
-          + Add Address
-        </Button>
+    <div style={{
+      border:" 1px solid #d9d9d9",
+      padding: "20px",
+      borderRadius: "8px",
+      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)"
+    }}
+    >
+    <Form
+      form={form}
+      layout="vertical"
+      onFinish={onFinish}
+    >
+      <Row gutter={16}>
         
-      </div>
-      <Table
-        components={components}
-        bordered
-        dataSource={data}
-        columns={columnsWithEditability}
-        rowClassName={() => "editable-row"}
-        pagination={false}
-      />
-      <Button type="primary" onClick={()=>{
-      console.log("save data",data)
-          data.map((item)=>{
-            console.log("item",item)
-            const {key, ...remain} = item;
-           
-            remain["pincode"]=parseInt(item.pincode)
-            // const fromdate = new Date(item.from);
-            // const formattedFromDate = fromdate.toISOString();
-            // remain["from"]=formattedFromDate
-            // const tilldate = new Date(item.till);
-            // const formattedTillDate = tilldate.toISOString();
-            // remain["till"]=formattedTillDate
-          
-            console.log("remain",remain)  
-           remain['userid']= userid
-            mutate({
-              resource: "addresses",
-              values: remain,
-          });
-          })
-
-    }}>Save Address</Button>
-    </div>
+        <Col span={12}>
+          <Form.Item label="Address Type" name="addresstype" rules={[{ required: true }]}>
+            <Select>
+              <Option value="home">Home</Option>
+              <Option value="work">Work</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label="House Name" name="housename" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+     
+      <Row gutter={16}>
+        <Col span={12}>
+          <Form.Item label="Village" name="village" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label="Tehsil" name="tehsil" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row gutter={16}>
+        <Col span={12}>
+          <Form.Item label="District" name="district" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Col>
+        <Col span={12}>
+          <Form.Item label="State" name="state" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row gutter={16}>
+        <Col span={12}>
+          <Form.Item label="Pincode" name="pincode" rules={[{ required: true }]}>
+            <Input />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
+        <Col span={24}>
+          <Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Col>
+      </Row>
+    </Form>
+  </div>
   );
 };
 
-const EditableCell = ({
-  editing,
-  dataIndex,
-  title,
-  inputType,
-  record,
-  index,
-  children,
-  ...restProps
-}) => {
-  const inputNode = <Input />;
-  return (
-    <td {...restProps}>
-      {editing ? (
-        <Form.Item
-          name={dataIndex}
-          style={{
-            margin: 0,
-          }}
-          rules={[
-            {
-              required: true,
-              message: `Please Input ${title}!`,
-            },
-          ]}
-        >
-          {inputNode}
-        </Form.Item>
-      ) : (
-        children
-      )}
-    </td>
-  );
-};
-
-export default AddressDetails;
+export default AddressForm;

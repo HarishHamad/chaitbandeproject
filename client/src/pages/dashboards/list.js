@@ -14,6 +14,7 @@ import { Show, ListButton } from "@refinedev/antd";
 import { Typography } from "antd";
 import { useList } from "@refinedev/core";
 import { Table } from "antd";
+import RegisterUser from "../users";
 
 const DashboardList = () => {
   const { tableProps, sorter } = useTable({
@@ -26,6 +27,7 @@ const DashboardList = () => {
   // const { queryResult } = useShow();
   // const { data, isLoading } = queryResult;
   const userlist = data?.data ?? [];
+  
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -35,52 +37,50 @@ const DashboardList = () => {
     return <div>Something went wrong!</div>;
   }
   console.log("userlist", userlist);
+  
   const columns = [
     {
-      title: "User ID",
+      title: "Student ID",
       dataIndex: "id",
       key: "id",
     },
     
     {
-      title: "User Name",
+      title: "Student Name",
       dataIndex: "username",
       key: "name",
     },
+    {
+      title: "Email.",
+      dataIndex: "email",
+      key: "email",
+    },
+    {
+      title: "Mobile No.",
+      dataIndex: "mobile",
+      key: "mobile",
+    },
+    {
+      title: "DOB",
+      dataIndex: "dob",
+      key: "dob",
+    },
+    {
+      title: "Gender",
+      dataIndex: "sex",
+      key: "sex",
+    },
+
    
 
-    {
-      title: "Business Name",
-      dataIndex: "businesses",
-      key: "businesses",
-      render: (businesses) => (
-        <ul>
-          {businesses.map((business) => (
-            <li key={business.id}>
-              {business.businessrole}- {business.category}-
-              {business.businessname}-{business.businessowner}
-            </li>
-          ))}
-        </ul>
-      ),
-    },
-    {
-      title: "Education",
-      dataIndex: "educations",
-      key: "educations",
-      render: (educations) => (
-        <ul>
-          {educations.map((education) => (
-            <li key={education.id}>{education.name}</li>
-          ))}
-        </ul>
-      ),
-    },
+
   ];
   return (
     <div>
       <h1>DashboardList</h1>
-      <Table dataSource={userlist} columns={columns} />
+      <Table dataSource={userlist } columns={columns}  />
+     
+      
     </div>
   );
 };

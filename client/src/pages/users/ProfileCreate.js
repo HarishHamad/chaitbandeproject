@@ -1,186 +1,165 @@
-import React, { useEffect, useState } from 'react';
-import { useList } from '@refinedev/core';
-import { Input, Space, Switch } from 'antd';
-import { Transfer } from 'antd';
-
-const CreateProfile = ({ userid }) => {
-  console.log("Profiles", userid);
-  const [mobilenum, setMobilenum] = useState('');
-  const [email, setEmail] = useState('');
-  const { data, isLoading, isError } = useList({
-    resource: 'users',
-  });
-
-  console.log("data", data)
-  const userlist = data?.data ?? [];
-  console.log("userlist", userlist)
-  const [targetKeys, setTargetKeys] = useState([]);
-  const [selectedKeys, setSelectedKeys] = useState([]);
-  const [disabled, setDisabled] = useState(false);
-  const [showSearch, setShowSearch] = useState(false);
-  const [filteredData, setFilteredData] = useState(userlist); // New state for filtered data
-
- 
-  useEffect(() => {
-    // Filter the data based on 'mobilenum' and 'email'
-    const filteredData = userlist.filter((item) => {
-      item['key'] = item.id
-      const mobileMatch = (item.mobile ?? '').toString().includes(mobilenum.toString());
-      const emailMatch = (item.email ?? '').toLowerCase().includes(email.toLowerCase());
-      return mobileMatch && emailMatch;
-    });
-    setFilteredData(filteredData);
-  }, [mobilenum, email, userlist]);
-
-console.log("filteredData",filteredData)
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Something went wrong!</div>;
-  }
-
-  const triggerDisable = (checked) => {
-    setDisabled(checked);
-  };
-
-  const onChange = (nextTargetKeys, direction, moveKeys) => {
-    console.log('targetKeys:', nextTargetKeys);
-    console.log('direction:', direction);
-    console.log('moveKeys:', moveKeys);
-    setTargetKeys(nextTargetKeys);
-  };
-
-  const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-    console.log('sourceSelectedKeys:', sourceSelectedKeys);
-    console.log('targetSelectedKeys:', targetSelectedKeys);
-    setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
-  };
-
-  const triggerShowSearch = (checked) => {
-    setShowSearch(checked);
-  };
-
-  const onScroll = (direction, e) => {
-    console.log('direction:', direction);
-    console.log('target:', e.target);
-  };
-
-  const leftTableColumns = [
-    {
-      dataIndex: 'tempid',
-      title: 'OldId',
-    },
-    {
-      dataIndex: 'id',
-      title: 'NewId'
-    },
-    {
-      dataIndex: 'mobile',
-      title: 'Mobile'
-    },
-    {
-      dataIndex: 'sex',
-      title: 'Sex',
-    },
-  ];
-
-  const rightTableColumns = [
-    {
-      dataIndex: 'tempid',
-      title: 'OldId',
-    },
-    {
-      dataIndex: 'id',
-      title: 'NewId'
-    },
-    {
-      dataIndex: 'mobile',
-      title: 'Mobile'
-    },
-    {
-      dataIndex: 'sex',
-      title: 'Sex',
-    },
-  ];
-
+import { Create, useForm } from "@refinedev/antd";
+import { mediaUploadMapper } from "@refinedev/strapi-v4";
+import { Col, Row, Select, Upload } from "antd";
+import { Form, Input } from "antd";
+// import CreateSubjectFields from "./CreateSubjectFields";
+const API_URL = process.env.REACT_APP_API_SERVER;
+const TOKEN_KEY = process.env.REACT_APP_TOKEN_KEY;
+ const ProfileCreate = ({userid, setUserId}) => {
+  const { formProps, saveButtonProps } = useForm();
   return (
-    <>
-      <button
-        onClick={() => {
-          // setFilterdata([
-          //   {
-          //     field: 'mobile',
-          //     operator: 'contains',
-          //     value: mobilenum,
-          //   },
-          //   {
-          //     field: 'email',
-          //     operator: 'contains',
-          //     value: email,
-          //   },
-          // ]);
+    <Create saveButtonProps={saveButtonProps}>
+
+      <Form
+        {...formProps}
+        layout="vertical"
+        onFinish={(values) => {
+          values = {...values,role:2,password:"Welcome@123"}
+          console.log("FINISH time values ", values);
+          formProps.onFinish?.(mediaUploadMapper(values));
         }}
       >
-        User Filter
-      </button>
-      <Input
-        placeholder="Filter by Mobile"
-        onChange={(event) => {
-          console.log('Change in mobile', event.target.value);
-          setMobilenum(event.target.value);
-        }}
-      />
-      <Input
-        placeholder="Filter by Email"
-        onChange={(event) => {
-          console.log('Change in email', event.target.value);
-          setEmail(event.target.value);
-        }}
-      />
-      <ul>
-        {/* Uncomment this section once you want to display the user list */}
-        {filteredData.map((user) => (
-          <li key={user.id}>
-            <h4>
-              {user.id}-{user.username} - ({user.mobile}) -({user.tempid}) -({user.email})
-            </h4>
-          </li>
-        ))}
-      </ul>
-      <Transfer
-        dataSource={filteredData} // Use filteredData instead of userlist
-        titles={['Source', 'Target']}
-        targetKeys={targetKeys}
-        selectedKeys={selectedKeys}
-        onChange={onChange}
-        onSelectChange={onSelectChange}
-        onScroll={onScroll}
-        leftColumns={leftTableColumns}
-        rightColumns={rightTableColumns}
-        render={(item) => `${item.username} - ${item.mobile} - ${item.email}`}
-      />
-      <Space
-        style={{
-          marginTop: 16,
-        }}
-      >
-        <Switch
-          unCheckedChildren="disabled"
-          checkedChildren="disabled"
-          checked={disabled}
-          onChange={triggerDisable}
-        />
-        <Switch
-          unCheckedChildren="showSearch"
-          checkedChildren="showSearch"
-          checked={showSearch}
-          onChange={triggerShowSearch}
-        />
-      </Space>
-    </>
+
+        <div className="container py-5 h-100">
+          <div className="row d-flex justify-content-center align-items-center h-100">
+            <div className="col-lg-8 col-xl-6">
+              <div className="card rounded-3">
+                <img
+                  src="./images/front.jpg"
+                  className="w-100"
+                  style={{
+                    borderTopLeftRadius: ".3rem",
+                    borderTopRightRadius: ".3rem",
+                  }}
+                  alt="Sample photo"
+                />
+                <div className="card-body p-4 p-md-5">
+                  <h3 className="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">
+                    Registration Info
+                  </h3>
+
+                  <Form.Item name="photo" label="Image">
+                    <Upload.Dragger
+                      name="files"
+                      action={`${API_URL}/api/upload`}
+                      // headers={{
+                      //   "Access-Control-Allow-Origin": "*",
+                      //   Authorization: `Bearer ${localStorage.getItem(
+                      //     TOKEN_KEY
+                      //   )}`,
+                      // }}
+                      accept="image/*"
+                    >
+                    
+                      <p className="ant-upload-text">Cover page</p>
+                    </Upload.Dragger>
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Student Full Name"
+                    name="username"
+                    rules={[{ required: true }]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Father's Name"
+                    name="father"
+                    rules={[{ required: true }]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Mother's Name"
+                    name="mother"
+                    rules={[{ required: true }]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Mobile Number"
+                    name="mobile"
+                    rules={[{ required: true }]}
+                  >
+                    <Input type="number" />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Email ID"
+                    name="email"
+                    rules={[{ required: true, type: "email" }]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Class "
+                    name="class"
+                    rules={[{ required: true, type: "text" }]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Subject"
+                    name="subject"
+                    rules={[{ required: true, type: "text" }]}
+                  >
+                    <Input />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="DOB"
+                    name="dob"
+                    rules={[{ required: true }]}
+                  >
+                    <Input type="date" />
+                  </Form.Item>
+
+                  <Form.Item
+                    label="Gender"
+                    name="sex"
+                    rules={[{ required: true }]}
+                  >
+                    <Select>
+                      <Select.Option value="female">Female</Select.Option>
+                      <Select.Option value="male">Male</Select.Option>
+                      <Select.Option value="other">Other</Select.Option>
+                    </Select>
+                  </Form.Item>
+
+                  <Form.Item>
+                    <button
+                      type="submit"
+                      className="btn btn-success btn-lg mb-1"
+                    >
+                      Submit
+                    </button>
+                  </Form.Item>
+                  <footer className="bg-light text-dark text-center py-5">
+                    <div className="container">
+                      <h6>
+                        {" "}
+                        <img
+                          style={{ width: "80px" }}
+                          src="./images/hph.png"
+                        />{" "}
+                        &copy; {new Date().getFullYear()} All Rights Reserved By
+                        HPH Technologies
+                      </h6>
+                    </div>
+                  </footer>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Form>
+      
+    </Create>
   );
 };
-
-export default CreateProfile;
+export default ProfileCreate

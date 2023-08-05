@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Dashboards = () => {
+const RegisterUser = () => {
     return (
         <div>
             <h1>Dashboard</h1>
@@ -8,4 +8,4 @@ const Dashboards = () => {
     );
 };
 
-export default Dashboards;
+export default RegisterUser
