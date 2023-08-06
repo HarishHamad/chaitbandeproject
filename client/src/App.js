@@ -1,5 +1,5 @@
 import { ErrorComponent, ThemedLayoutV2 } from "@refinedev/antd";
-import { Refine } from "@refinedev/core";
+import { Refine, useNavigation } from "@refinedev/core";
 import { useState } from "react";
 
 import { DashboardOutlined, EnvironmentOutlined } from "@ant-design/icons";
@@ -22,16 +22,16 @@ import RegisterUser from "./pages/users/RegisterUser";
 const ABLY_API_KEY = process.env.REACT_APP_ABLY_API_KEY;
 const API_URL = process.env.REACT_APP_API_SERVER;
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_KEY;
-
+/**
+ * This is just for building
+ * @returns 
+ */
 const App = () => {
   const axiosInstance = axios.create();
   const strapiAuthHelper = AuthHelper(API_URL + "/api");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState("USER");
-
-  if (window.location.pathname === "/") {
-    window.location.href = "/users";
-  }
+const navigate = useNavigation()
 
   return (
     <BrowserRouter>
@@ -76,7 +76,7 @@ const App = () => {
           >
 
             <Route index element={<NavigateToResource resource="users" />} />
-            <Route path="users">
+            <Route path="/users">
               <Route index element={<RegisterUser />} />
             </Route>
             <Route index element={<NavigateToResource resource="dashboards" />} />
