@@ -1,7 +1,7 @@
-import { Col, Row } from "antd";
+import { Button, Col, Row } from "antd";
 import React, { useState } from "react";
 
-export default function InfoPage() {
+export default function InfoPage({ setActiveTab}) {
   const [videoUrls, setVideoUrls] = useState([
     "https://www.youtube.com/watch?v=c2s1-ahjRyE",
     
@@ -71,7 +71,11 @@ export default function InfoPage() {
           </Col>
         ))}
       </Row>
-
+              <Row>
+                <Col>
+                  <h1><Button onClick={()=>{setActiveTab("tab2")}}>For Registration </Button></h1>
+                </Col>
+              </Row>
     </div>
   );
 }

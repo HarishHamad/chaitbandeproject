@@ -1,79 +1,88 @@
 import React, { useState } from "react";
 import { Create, SaveButton, useSelect, useStepsForm } from "@refinedev/antd";
-import { Form, Input, Select, Button, Steps, Row, Col,Upload } from "antd";
+import { Form, Input, Select, Button, Steps, Row, Col, Upload } from "antd";
 import { useCreate } from "@refinedev/core";
 import { mediaUploadMapper } from "@refinedev/strapi-v4";
 import axios from "axios";
+import { useNavigation } from "@refinedev/core";
+import { useNavigate } from "react-router-dom";
 const API_URL = process.env.REACT_APP_API_SERVER;
 const TOKEN_KEY = process.env.REACT_APP_TOKEN_KEY;
 
 function ConnectedForm(props) {
- 
-    
   const record = props.record;
+  const setActiveTab = props.setActiveTab;
+  const navigate = useNavigate();
   console.log("record", record);
 
   const { mutate } = useCreate();
-  
-const registerUser = async (userData) => {
-  try {
-    const response = await fetch(`${API_URL}/api/auth/local/register`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message[0].messages[0].message);
+  const registerUser = async (userData) => {
+    try {
+      const response = await fetch(`${API_URL}/api/auth/local/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userData),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message[0].messages[0].message);
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (error) {
+      throw new Error(error.message);
     }
+  };
 
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
-
-// Example usage
-
-
+  // Example usage
 
   const { current, gotoStep, stepsProps, formProps, saveButtonProps } =
     useStepsForm({
-      submit:  (values) => {
-        values = {...values,role:2,password:"Welcome@123"}
-        const myemail = values['email']
-        values['email'] = myemail?myemail:values['mobile']+'@hph.com'
+      submit: (values) => {
+        values = { ...values, role: 2, password: "Welcome@123",org_name: "CHETBANDE", };
+        const myemail = values["email"];
+        values["email"] = myemail ? myemail : values["mobile"] + "@hph.com";
         formProps.onFinish?.(mediaUploadMapper(values));
-          
-  registerUser(values).then((userData) => {
-    console.log('User registered:', userData);
-    const addressdata= {
-      users_permissions_users: userData?.user?.id,
-      addresstype: values.addresstype,
-      housename: values.housename,
-      village: values.village,
-      tehsil: values.tehsil,
-      district: values.district,
-      state: values.state,
-      pincode: values.pincode,
-      org_name: "CHETBANDE"
-    }
-     fetch(`${API_URL}/api/addresses`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({data:addressdata}),
-    });
-  })
-  .catch((error) => {
-    console.error('Registration error:', error.message);
-  });
-          
+
+        registerUser(values)
+          .then((userData) => {
+            console.log("in register", userData);
+            // console.log("User registered:", userData);
+            const addressdata = {
+              users_permissions_users: userData?.user?.id,
+              addresstype: values.addresstype,
+              housename: values.housename,
+              village: values.village,
+              tehsil: values.tehsil,
+              district: values.district,
+              state: values.state,
+              pincode: values.pincode,
+              
+            };
+            // console.log("inmuted submit", aaaaa);
+            fetch(`${API_URL}/api/addresses`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ data: addressdata }),
+              // console.log("inmuted submit",aaaaa)
+            });
+            console.log("inmuted submit", bbbbb);
+           
+          })
+
+          .catch((error) => {
+            console.error("Registration error:", error.message);
+          });
+          console.log("End subbmit")
+          alert("succesfull")
+          navigate("/dashboards");
           
       },
     });
@@ -81,30 +90,23 @@ const registerUser = async (userData) => {
 
   const { Step } = Steps;
   const formList = [
-    < div style={{
-        border:" 1px solid #d9d9d9",
+    <div
+      style={{
+        border: " 1px solid #d9d9d9",
         padding: "20px",
         borderRadius: "8px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)"
-      }}>
-     
-    
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
       <Form.Item name="photo" label="Image">
-      <Upload.Dragger
-        name="files"
-        action={`${API_URL}/api/upload`}
-        // headers={{
-        //   "Access-Control-Allow-Origin": "*",
-        //   Authorization: `Bearer ${localStorage.getItem(
-        //     TOKEN_KEY
-        //   )}`,
-        // }}
-        accept="image/*"
-      >
-      
-        <p className="ant-upload-text">Profile Photo</p>
-      </Upload.Dragger>
-    </Form.Item>
+        <Upload.Dragger
+          name="files"
+          action={`${API_URL}/api/upload`}
+          accept="image/*"
+        >
+          <p className="ant-upload-text">Profile Photo</p>
+        </Upload.Dragger>
+      </Form.Item>
       <Row gutter={24}>
         <Col span={8}>
           <Form.Item
@@ -173,7 +175,7 @@ const registerUser = async (userData) => {
               },
             ]}
           >
-            <Input  type="email" placeholder="email" />
+            <Input type="email" placeholder="email" />
           </Form.Item>
         </Col>
         <Col span={8}>
@@ -201,7 +203,7 @@ const registerUser = async (userData) => {
               },
             ]}
           >
-            <Input  placeholder="Class" />
+            <Input placeholder="Class" />
           </Form.Item>
         </Col>
 
@@ -231,15 +233,21 @@ const registerUser = async (userData) => {
       </Row>
     </div>,
 
-    <div style={{
-        border:" 1px solid #d9d9d9",
+    <div
+      style={{
+        border: " 1px solid #d9d9d9",
         padding: "20px",
         borderRadius: "8px",
-        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)"
-      }}>
+        boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
       <Row gutter={24}>
         <Col span={8}>
-        <Form.Item label="Address Type" name="addresstype" rules={[{ required: true }]}>
+          <Form.Item
+            label="Address Type"
+            name="addresstype"
+            rules={[{ required: true }]}
+          >
             <Select>
               <Option value="home">Home</Option>
               <Option value="work">Work</Option>
@@ -248,12 +256,20 @@ const registerUser = async (userData) => {
         </Col>
 
         <Col span={8}>
-        <Form.Item label="House Name" name="housename" rules={[{ required: true }]}>
+          <Form.Item
+            label="House Name"
+            name="housename"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
         </Col>
         <Col span={8}>
-        <Form.Item label="Village" name="village" rules={[{ required: true }]}>
+          <Form.Item
+            label="Village"
+            name="village"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
         </Col>
@@ -261,12 +277,16 @@ const registerUser = async (userData) => {
 
       <Row gutter={24}>
         <Col span={8}>
-        <Form.Item label="Tehsil" name="tehsil" rules={[{ required: true }]}>
+          <Form.Item label="Tehsil" name="tehsil" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
         </Col>
         <Col span={8}>
-        <Form.Item label="District" name="district" rules={[{ required: true }]}>
+          <Form.Item
+            label="District"
+            name="district"
+            rules={[{ required: true }]}
+          >
             <Input />
           </Form.Item>
         </Col>
@@ -278,7 +298,11 @@ const registerUser = async (userData) => {
       </Row>
       <Row gutter={24}>
         <Col span={8}>
-          <Form.Item label="Pincode" name="pincode" rules={[{ required: true }]}>
+          <Form.Item
+            label="Pincode"
+            name="pincode"
+            rules={[{ required: true }]}
+          >
             <Input type="number" />
           </Form.Item>
         </Col>

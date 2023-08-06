@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Form, Input, Select, Upload, Button, message } from "antd";
 import { getValueProps } from "@refinedev/strapi-v4";
@@ -10,35 +10,32 @@ import InfoPage from "./Info";
 import AddressForm from "./Address";
 import ConnectedForm from "./ConnectForm";
 
-const onChange = (key) => {
-  console.log(key);
-};
-
 const RegisterUser = () => {
-  const items = [
-    {
-      key: "1",
-      label: `ChaitBande`,
-      children: <InfoPage />,
-    },
-    {
-      key: "2",
-      label: `Profile`,
-      children: <ConnectedForm />,
-    },
-  ];
+  const [activeTab, setActiveTab] = useState("tab1"); // Initial active tab key
+  const { TabPane } = Tabs;
+
+  const handleTabChange = (key) => {
+    setActiveTab(key);
+  };
 
   return (
     <div>
-    <img
-                src="./images/chetbandetemp.png"
-                className="w-100"
-                style={{
-                 height:"350px"
-                }}
-                alt="Sample photo"
-              />
-      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+      <img
+        src="./images/chetbandetemp.png"
+        className="w-100"
+        style={{
+          height: "350px",
+        }}
+        alt="Sample photo"
+      />
+      <Tabs activeKey={activeTab} onChange={handleTabChange}>
+        <TabPane tab="ChaitBande" key="tab1">
+          <InfoPage setActiveTab={setActiveTab} />
+        </TabPane>
+        <TabPane tab="Profile" key="tab2">
+          <ConnectedForm setActiveTab={setActiveTab} />
+        </TabPane>
+      </Tabs>
     </div>
   );
 };
