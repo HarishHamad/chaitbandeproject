@@ -3,7 +3,7 @@ import axios from "axios";
 import { Form, Input, Select, Upload, Button, message } from "antd";
 import { getValueProps } from "@refinedev/strapi-v4";
 import { useForm } from "@refinedev/core";
-import { Tabs } from 'antd';
+import { Tabs } from "antd";
 import CreateProfile from "./ProfileCreate";
 import AddressDetails from "./Address";
 import InfoPage from "./Info";
@@ -14,28 +14,33 @@ const onChange = (key) => {
   console.log(key);
 };
 
-
 const RegisterUser = () => {
- 
   const items = [
     {
-      key: '1',
+      key: "1",
       label: `ChaitBande`,
-      children: <InfoPage/>,
+      children: <InfoPage />,
     },
     {
-      key: '2',
+      key: "2",
       label: `Profile`,
       children: <ConnectedForm />,
     },
-    
-   
   ];
-  
-  return(
 
-  <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
-  )
+  return (
+    <div>
+    <img
+                src="./images/chetbandetemp.png"
+                className="w-100"
+                style={{
+                 height:"350px"
+                }}
+                alt="Sample photo"
+              />
+      <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    </div>
+  );
 };
 
 export default RegisterUser;

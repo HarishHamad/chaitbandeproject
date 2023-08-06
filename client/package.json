@@ -2,6 +2,7 @@
   "name": "hphnextjs",
   "version": "0.1.0",
   "private": true,
+
   "scripts": {
     "start": " set PORT=3304 && cross-env DISABLE_ESLINT_PLUGIN=true refine start",
     "build": "cross-env DISABLE_ESLINT_PLUGIN=true refine build",

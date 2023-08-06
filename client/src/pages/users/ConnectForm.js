@@ -45,6 +45,8 @@ const registerUser = async (userData) => {
     useStepsForm({
       submit:  (values) => {
         values = {...values,role:2,password:"Welcome@123"}
+        const myemail = values['email']
+        values['email'] = myemail?myemail:values['mobile']+'@hph.com'
         formProps.onFinish?.(mediaUploadMapper(values));
           
   registerUser(values).then((userData) => {
@@ -58,6 +60,7 @@ const registerUser = async (userData) => {
       district: values.district,
       state: values.state,
       pincode: values.pincode,
+      org_name: "CHETBANDE"
     }
      fetch(`${API_URL}/api/addresses`, {
       method: 'POST',
@@ -99,7 +102,7 @@ const registerUser = async (userData) => {
         accept="image/*"
       >
       
-        <p className="ant-upload-text">Cover page</p>
+        <p className="ant-upload-text">Profile Photo</p>
       </Upload.Dragger>
     </Form.Item>
       <Row gutter={24}>
