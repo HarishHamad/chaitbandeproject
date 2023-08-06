@@ -81,7 +81,7 @@ function ConnectedForm(props) {
             console.error("Registration error:", error.message);
           });
           console.log("End subbmit")
-          alert("succesfull")
+         
           navigate("/dashboards");
           
       },
